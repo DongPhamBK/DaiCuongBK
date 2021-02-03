@@ -11,11 +11,9 @@ public class ContractQuizPhysicsOne {
     public static class CategoriesTable implements BaseColumns {
         public static final String TABLE_NAME = "quiz_categories";
         public static final String COLUMN_NAME = "name";
-
     }
 
     public static class QuestionTable implements BaseColumns {
-        //bảng câu hỏi
         public static final String TABLE_NAME = "quiz_questions";
         public static final String COLUMN_QUESTION = "question";
         public static  final String COLUMN_OPTION1 = "option1";

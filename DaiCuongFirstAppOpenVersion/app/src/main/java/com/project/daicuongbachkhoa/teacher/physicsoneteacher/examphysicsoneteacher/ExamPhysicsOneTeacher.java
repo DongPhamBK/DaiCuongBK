@@ -28,20 +28,38 @@ import com.project.daicuongbachkhoa.model.Exam;
 
 public class ExamPhysicsOneTeacher extends AppCompatActivity {
 
-    private EditText txtContentExamPhysicsOneTeacher, txtOptionAExamPhysicsOneTeacher, txtOptionBExamPhysicsOneTeacher,
-            txtOptionCExamPhysicsOneTeacher, txtOptionDExamPhysicsOneTeacher, txtRightAnsExamPhysicsOneTeacher;
-    private TextView txtNumberExamPhysicsOneTeacher, txtUpdateInfoExamPhysicsOneTeacher;
-    private Button btnQuestionNextExamPhysicsOneTeacher, btnQuestionPrevExamPhysicsOneTeacher, btnQuestionEditExamPhysicsOneTeacher;
-    private DatabaseReference reference, referenceStudent, referenceExam, answerPhysicsOne, answerExam1;
-    private ValueEventListener referenceQuestion, referenceAnswer;
-    private String codeExam, nameExam;
+    private EditText
+            txtContentExamPhysicsOneTeacher,
+            txtOptionAExamPhysicsOneTeacher,
+            txtOptionBExamPhysicsOneTeacher,
+            txtOptionCExamPhysicsOneTeacher,
+            txtOptionDExamPhysicsOneTeacher,
+            txtRightAnsExamPhysicsOneTeacher;
+    private TextView
+            txtNumberExamPhysicsOneTeacher,
+            txtUpdateInfoExamPhysicsOneTeacher;
+    private Button
+            btnQuestionNextExamPhysicsOneTeacher,
+            btnQuestionPrevExamPhysicsOneTeacher,
+            btnQuestionEditExamPhysicsOneTeacher;
+    private DatabaseReference
+            reference,
+            referenceStudent,
+            referenceExam,
+            answerPhysicsOne,
+            answerExam1;
+    private ValueEventListener
+            referenceQuestion,
+            referenceAnswer;
+    private String
+            codeExam,
+            nameExam;
     private int i = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_physics_one_teacher);
-
         txtNumberExamPhysicsOneTeacher = findViewById(R.id.txtNumberExamPhysicsOneTeacher);
         txtUpdateInfoExamPhysicsOneTeacher = findViewById(R.id.txtUpdateInfoExamPhysicsOneTeacher);
         txtContentExamPhysicsOneTeacher = findViewById(R.id.txtContentExamPhysicsOneTeacher);
@@ -53,14 +71,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
         btnQuestionPrevExamPhysicsOneTeacher = findViewById(R.id.btnQuestionPrevExamPhysicsOneTeacher);
         btnQuestionNextExamPhysicsOneTeacher = findViewById(R.id.btnQuestionNextExamPhysicsOneTeacher);
         btnQuestionEditExamPhysicsOneTeacher = findViewById(R.id.btnQuestionEditExamPhysicsOneTeacher);
-        //btnQuestionEditExamPhysicsOneTeacher.setText("Chỉnh sửa");
 
-       /* txtContentExamPhysicsOneTeacher.setFocusable(false);
-        txtOption1ExamPhysicsOneTeacher.setFocusable(false);
-        txtOption2ExamPhysicsOneTeacher.setFocusable(false);
-        txtOption3ExamPhysicsOneTeacher.setFocusable(false);
-        txtOption4ExamPhysicsOneTeacher.setFocusable(false);
-        txtRightAnsExamPhysicsOneTeacher.setFocusable(false);*/
         loadCodeExam();
         showQuestion(1);
         txtUpdateInfoExamPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
@@ -77,21 +88,18 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
                 showQuestionNext();
             }
         });
-
         btnQuestionPrevExamPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showQuestionPrev();
             }
         });
-
         btnQuestionEditExamPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editQuestion();
             }
         });
-
     }
 
     private void updateInfoExamPhysicsOneTeacher() {
@@ -103,10 +111,10 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
         title.setGravity(Gravity.CENTER);
         title.setTextSize(18);
         builder.setCustomTitle(title);
-        View update_layout = LayoutInflater.from(this).inflate(R.layout.dialog_update_info_exam_physics_one_teacher, null);
-        final EditText txtUpdateNameExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateNameExamPhysicsOneTeacher);
-        final EditText txtUpdateTeacherExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateTeacherExamPhysicsOneTeacher);
-        final EditText txtUpdateDeadlineExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateDeadlineExamPhysicsOneTeacher);
+        View update_layout = LayoutInflater.from(this).inflate(R.layout.dialog_update_info_exam_teacher, null);
+        final EditText txtUpdateNameExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateNameExamTeacher);
+        final EditText txtUpdateTeacherExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateTeacherExamTeacher);
+        final EditText txtUpdateDeadlineExamPhysicsOneTeacher = update_layout.findViewById(R.id.txtUpdateDeadlineExamTeacher);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("PhysicsOneTeacher");
         ValueEventListener referenceInfo = reference.child("ExamInfo").child(codeExam).addValueEventListener(new ValueEventListener() {
             @Override
@@ -125,19 +133,17 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
             }
         });
 
-
         builder.setView(update_layout);
         builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Exam exam = new Exam(codeExam,txtUpdateNameExamPhysicsOneTeacher.getText().toString(),txtUpdateTeacherExamPhysicsOneTeacher.getText().toString(),txtUpdateDeadlineExamPhysicsOneTeacher.getText().toString());
+                Exam exam = new Exam(codeExam, txtUpdateNameExamPhysicsOneTeacher.getText().toString(), txtUpdateTeacherExamPhysicsOneTeacher.getText().toString(), txtUpdateDeadlineExamPhysicsOneTeacher.getText().toString());
                 FirebaseDatabase.getInstance().getReference("PhysicsOneTeacher").child("ExamInfo").child(codeExam).setValue(exam);
                 FirebaseUser teacher = FirebaseAuth.getInstance().getCurrentUser();
                 String teacherID = teacher.getUid();
                 DatabaseReference referenceTeacher = FirebaseDatabase.getInstance().getReference("Teachers").child(teacherID).child("Subjects").child("PhysicsOne").child("Exam").child(codeExam);
                 referenceTeacher.setValue(exam);
                 Toast.makeText(ExamPhysicsOneTeacher.this, "Thay đổi thành công", Toast.LENGTH_SHORT).show();
-
             }
         });
         builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
@@ -146,8 +152,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
-        builder.show();//hiển thị
+        builder.show();
 
     }
 
@@ -164,9 +169,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
         String status = btnQuestionEditExamPhysicsOneTeacher.getText().toString();
         if (status.equals("Chỉnh sửa")) {
             btnQuestionEditExamPhysicsOneTeacher.setText("Lưu");
-            //txtContentExamPhysicsOneTeacher.setFocusable(true);
             txtContentExamPhysicsOneTeacher.setEnabled(true);
-            //txtContentExamPhysicsOneTeacher.setInputType(InputType.TYPE_CLASS_TEXT);
             txtContentExamPhysicsOneTeacher.setFocusable(true);
             txtContentExamPhysicsOneTeacher.setFocusableInTouchMode(true);
             txtContentExamPhysicsOneTeacher.setTextColor(Color.rgb(9, 0, 0));
@@ -187,10 +190,8 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
             txtRightAnsExamPhysicsOneTeacher.setTextColor(Color.rgb(9, 0, 0));
             btnQuestionNextExamPhysicsOneTeacher.setVisibility(View.GONE);
             btnQuestionPrevExamPhysicsOneTeacher.setVisibility(View.GONE);
-
         } else if (status.equals("Lưu")) {
             btnQuestionEditExamPhysicsOneTeacher.setText("Chỉnh sửa");
-
             btnQuestionNextExamPhysicsOneTeacher.setVisibility(View.VISIBLE);
             btnQuestionPrevExamPhysicsOneTeacher.setVisibility(View.VISIBLE);
             reference = FirebaseDatabase.getInstance().getReference("PhysicsOneTeacher");
@@ -202,10 +203,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
             referenceExam.child("Ques" + i).child("OptionD").setValue(txtOptionDExamPhysicsOneTeacher.getText().toString());
             referenceExam.child("Ques" + i).child("RightAns").setValue(txtRightAnsExamPhysicsOneTeacher.getText().toString());
             showQuestion(i);
-
         }
-
-
     }
 
     private void showQuestionPrev() {
@@ -228,9 +226,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
         }
     }
 
-
     private void showQuestion(int questionCount) {
-
         txtContentExamPhysicsOneTeacher.setFocusable(false);
         txtContentExamPhysicsOneTeacher.setTextColor(Color.rgb(99, 99, 99));
         txtOptionAExamPhysicsOneTeacher.setFocusable(false);
@@ -243,10 +239,9 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
         txtOptionDExamPhysicsOneTeacher.setTextColor(Color.rgb(99, 99, 99));
         txtRightAnsExamPhysicsOneTeacher.setFocusable(false);
         txtRightAnsExamPhysicsOneTeacher.setTextColor(Color.rgb(99, 99, 99));
-
         reference = FirebaseDatabase.getInstance().getReference("PhysicsOneTeacher");
         referenceExam = reference.child(codeExam);
-        referenceQuestion = referenceExam.child("Ques" + questionCount).addValueEventListener(new ValueEventListener() {
+        referenceExam.child("Ques" + questionCount).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String content = String.valueOf(snapshot.child("Content").getValue());
@@ -265,7 +260,7 @@ public class ExamPhysicsOneTeacher extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(ExamPhysicsOneTeacher.this, "Hmmm ! Có vẻ có lỗi xảy ra, vui lòng liên hệ nhóm phát triển để khắc phục kịp thời !", Toast.LENGTH_SHORT).show();
             }
         });
 

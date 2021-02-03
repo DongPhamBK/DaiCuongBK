@@ -20,42 +20,41 @@ import com.project.daicuongbachkhoa.model.Exam;
 
 public class ListExamPhysicsOneTeacher extends AppCompatActivity {
 
-    private RecyclerView revListExamPhysicsOneTeacher;
-    AdapterExamPhysicsOneTeacher adapterExam;
-    private DatabaseReference reference, referenceTeacher;
-    private DatabaseReference listPhysicsOne, answerExam1, answerPhysicsOne;
-    private ValueEventListener referenceExam;
-    private FirebaseUser teacher;
-    private String teacherID;
+    private RecyclerView
+            revListExamPhysicsOneTeacher;
+    AdapterExamPhysicsOneTeacher
+            adapterExam;
+    private DatabaseReference
+            referenceTeacher;
+    private FirebaseUser
+            teacher;
+    private String
+            teacherID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_exam_physics_one_teacher);
         revListExamPhysicsOneTeacher = findViewById(R.id.revListExamPhysicsOneTeacher);
-        setListExamPhysicsOneTeacher();
 
+        setListExamPhysicsOneTeacher();
     }
 
     private void setListExamPhysicsOneTeacher() {
-
-       teacher = FirebaseAuth.getInstance().getCurrentUser();
-       teacherID = teacher.getUid();
-       referenceTeacher = FirebaseDatabase.getInstance().getReference("Teachers");
-
+        teacher = FirebaseAuth.getInstance().getCurrentUser();
+        teacherID = teacher.getUid();
+        referenceTeacher = FirebaseDatabase.getInstance().getReference("Teachers");
         revListExamPhysicsOneTeacher.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerOptions<Exam> options =
                 new FirebaseRecyclerOptions.Builder<Exam>().setQuery(referenceTeacher.child(teacherID).child("Subjects").child("PhysicsOne").child("Exam"), Exam.class).build();
         adapterExam = new AdapterExamPhysicsOneTeacher(options);
-
         revListExamPhysicsOneTeacher.setAdapter(adapterExam);
     }
-
 
     @Override
     protected void onStart() {
         super.onStart();
         adapterExam.startListening();
-
     }
 
     @Override

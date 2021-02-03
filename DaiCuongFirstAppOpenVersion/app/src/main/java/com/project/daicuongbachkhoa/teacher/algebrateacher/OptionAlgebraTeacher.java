@@ -15,13 +15,14 @@ import com.project.daicuongbachkhoa.teacher.lawteacher.OptionLawTeacher;
 
 public class OptionAlgebraTeacher extends AppCompatActivity {
 
-    private TextView txtAlgeblaTeacherLogout, txtAlgebraTeacherHelp;
+    private TextView
+            txtAlgeblaTeacherLogout,
+            txtAlgebraTeacherHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_algebra_teacher);
-
         txtAlgeblaTeacherLogout = findViewById(R.id.txtAlgebraTeacherLogout);
         txtAlgebraTeacherHelp = findViewById(R.id.txtAlgebraTeacherHelp);
 
@@ -31,7 +32,6 @@ public class OptionAlgebraTeacher extends AppCompatActivity {
                 algebraTeacherLogout();
             }
         });
-
         txtAlgebraTeacherHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -17,26 +17,24 @@ import com.project.daicuongbachkhoa.model.Exam;
 
 public class ListExamPhysicsOneStudent extends AppCompatActivity {
 
-
-    private RecyclerView revListExamPhysicsOneStudent;
-    private AdapterExamPhysicsOneStudent adapterExam;
+    private RecyclerView
+            revListExamPhysicsOneStudent;
+    private AdapterExamPhysicsOneStudent
+            adapterExam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_exam_physics_one_student);
-
         revListExamPhysicsOneStudent = findViewById(R.id.revListExamPhysicsOneStudent);
+
         setListExamPhysicsOneStudent();
-
-
     }
 
     private void setListExamPhysicsOneStudent() {
         revListExamPhysicsOneStudent.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerOptions<Exam> options =
                 new FirebaseRecyclerOptions.Builder<Exam>().setQuery(FirebaseDatabase.getInstance().getReference().child("PhysicsOneTeacher").child("ExamInfo"), Exam.class).build();
-
         adapterExam = new AdapterExamPhysicsOneStudent(options);
         revListExamPhysicsOneStudent.setAdapter(adapterExam);
     }

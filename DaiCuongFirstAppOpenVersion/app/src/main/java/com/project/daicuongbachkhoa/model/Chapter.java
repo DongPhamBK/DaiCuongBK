@@ -1,7 +1,10 @@
 package com.project.daicuongbachkhoa.model;
 
 public class Chapter {
-private String chapterCode,chapterName,chapterContent;
+    private String
+            chapterCode,
+            chapterName,
+            chapterContent;
 
     public Chapter() {
     }

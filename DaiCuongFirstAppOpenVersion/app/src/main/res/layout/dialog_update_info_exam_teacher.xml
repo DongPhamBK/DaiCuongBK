@@ -12,7 +12,7 @@
         android:text="Tên đề thi:" />
 
     <EditText
-        android:id="@+id/txtUpdateNameExamPhysicsOneTeacher"
+        android:id="@+id/txtUpdateNameExamTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,7 +26,7 @@
         android:text="Tên giáo viên:" />
 
     <EditText
-        android:id="@+id/txtUpdateTeacherExamPhysicsOneTeacher"
+        android:id="@+id/txtUpdateTeacherExamTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -40,7 +40,7 @@
         android:text="Thời hạn:" />
 
     <EditText
-        android:id="@+id/txtUpdateDeadlineExamPhysicsOneTeacher"
+        android:id="@+id/txtUpdateDeadlineExamTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

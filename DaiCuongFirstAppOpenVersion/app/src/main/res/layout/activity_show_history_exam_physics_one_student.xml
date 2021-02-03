@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student.physicsonestudent.statisticsphysicsonestudent.StatisticsPhysicsOneStudent">
+    android:background="@drawable/background_main"
+    tools:context=".student.physicsonestudent.historyphysicsonestudent.ShowHistoryExamPhysicsOneStudent">
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/textView73"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Lịch sử bài thi gần nhất"
+        android:text="Chi tiết lịch sử làm bài"
         android:textColor="@color/colorTextStudent"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -27,16 +28,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/frames_layout"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27">
+        app:layout_constraintTop_toBottomOf="@+id/textView73">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,14 +45,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/txtHis"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtShowHistoryExamPhysicOneStudent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đang tải..." />
+                    android:text="Vui lòng chờ !" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,9 +47,9 @@ public class AdapterChapterPhysicsOneStudent extends ArrayAdapter<Chapter> {
         LayoutInflater inflater = this.context.getLayoutInflater();
         View row = inflater.inflate(this.resource, null);
 
-        Button btnChapterPhysicsOneStudent = row.findViewById(R.id.btnChapterPhysicsOneStudent);
-        TextView txtChapterNamePhysicsOneStudent = row.findViewById(R.id.txtChapterNamePhysicsOneStudent);
-        TextView txtChapterContentPhysicsOneStudent = row.findViewById(R.id.txtChapterContentPhysicsOneStudent);
+        Button btnChapterPhysicsOneStudent = row.findViewById(R.id.btnChapterStudent);
+        TextView txtChapterNamePhysicsOneStudent = row.findViewById(R.id.txtChapterNameStudent);
+        TextView txtChapterContentPhysicsOneStudent = row.findViewById(R.id.txtChapterContentStudent);
 
         final Chapter chapter = this.objects.get(position);
         btnChapterPhysicsOneStudent.setText("Xem ngay !");

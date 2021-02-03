@@ -24,31 +24,39 @@ import com.project.daicuongbachkhoa.R;
 import com.project.daicuongbachkhoa.model.Tasks;
 
 public class TasksPhysicsOneStudent extends AppCompatActivity {
-    private TextView txtSetGroupPhysicsOneStudent;
-    private Button btnGoToGroupPhysicsOneStudent;
-    private RecyclerView revListTasksPhysicsOneStudent;
-    private FirebaseUser student;
-    private FirebaseDatabase database;
-    private DatabaseReference referenceTasks;
-    private FirebaseRecyclerOptions<Tasks> recyclerOptions;//kiểu dữ liệu
-    private FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneStudent> adapter;
-    private String linkGroup;
+
+    private TextView
+            txtSetGroupPhysicsOneStudent;
+    private Button
+            btnGoToGroupPhysicsOneStudent;
+    private RecyclerView
+            revListTasksPhysicsOneStudent;
+    private FirebaseUser
+            student;
+    private FirebaseDatabase
+            database;
+    private DatabaseReference
+            referenceTasks;
+    private FirebaseRecyclerOptions<Tasks>
+            recyclerOptions;
+    private FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneStudent>
+            adapter;
+    private String
+            linkGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_physics_one_student);
-
         txtSetGroupPhysicsOneStudent = findViewById(R.id.txtSetGroupPhysicsOneStudent);
         revListTasksPhysicsOneStudent = findViewById(R.id.revListTasksPhysicsOneStudent);
         btnGoToGroupPhysicsOneStudent = findViewById(R.id.btnGoToGroupPhysicsOneStudent);
-        //student = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
+
         Intent intent = getIntent();
         String idTeacher = intent.getStringExtra("ID_TEACHER_PHYSICS_ONE_STUDENT");
         linkGroup = intent.getStringExtra("LINK_GROUP_PHYSICS_ONE_STUDENT");
         referenceTasks = database.getReference("Teachers").child(idTeacher).child("Subjects").child("PhysicsOne").child("Tasks");
-        //referenceTasks.keepSynced(true);
         showTasksPhysicsOneStudent();
         txtSetGroupPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,20 +64,23 @@ public class TasksPhysicsOneStudent extends AppCompatActivity {
                 setGroupPhysicsOneStudent();
             }
         });
-
         btnGoToGroupPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToGroupPhysicsOneStudent(linkGroup);
             }
         });
-
     }
 
     private void goToGroupPhysicsOneStudent(String url) {
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        try {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Link không hợp lệ ! Vui lòng nhập lại !", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void showTasksPhysicsOneStudent() {
@@ -78,25 +89,20 @@ public class TasksPhysicsOneStudent extends AppCompatActivity {
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);//đảo ngược danh sách, rất thú vị !
         revListTasksPhysicsOneStudent.setLayoutManager(mLayoutManager);
-        //String studentID = student.getUid();
-        //referenceTasks
         recyclerOptions = new FirebaseRecyclerOptions.Builder<Tasks>().setQuery(referenceTasks, Tasks.class).build();//khá dài
         adapter = new FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneStudent>(recyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull AdapterTasksPhysicsOneStudent holder, int i, @NonNull Tasks model) {
-                holder.txtTitleTasks.setText(model.getTitleTasks());
-                holder.txtContentTasks.setText(model.getContentTasks());
-
+                holder.txtTitleTasksPhysicsOneStudent.setText(model.getTitleTasks());
+                holder.txtContentTasksPhysicsOneStudent.setText(model.getContentTasks());
             }
 
             @NonNull
             @Override
             public AdapterTasksPhysicsOneStudent onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_tasks, parent, false);
-                //tạo lập view
                 AdapterTasksPhysicsOneStudent viewHolder = new AdapterTasksPhysicsOneStudent(view);
                 return viewHolder;
-
             }
         };
         revListTasksPhysicsOneStudent.setAdapter(adapter);//ok
@@ -105,7 +111,7 @@ public class TasksPhysicsOneStudent extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onStart();//đừng quên hàm này, nó là sự lắng nghe thay đổi !
+        super.onStart();
         adapter.startListening();
     }
 

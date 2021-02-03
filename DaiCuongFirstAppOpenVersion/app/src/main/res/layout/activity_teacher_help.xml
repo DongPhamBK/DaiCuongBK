@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Hoặc qua Facebook của nhà phát triển:" />
+                    android:text="\nHoặc qua Facebook của nhà phát triển:" />
 
                 <Button
                     android:id="@+id/btnFacebookHelpPhysicsOneTeacher"

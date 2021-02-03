@@ -19,21 +19,26 @@ import com.project.daicuongbachkhoa.teacher.physicsoneteacher.tasksphysicsonetea
 
 public class OptionPhysicsOneTeacher extends AppCompatActivity {
 
-    private TextView txtPhysicsOneTeacherLogout, txtPhysicsOneTeacherHelp;
-    private Button btnOutlinePhysicsOneTeacher, btnListExamPhysicsOneTeacher, btnNotificationPhysicsOneTeacher, btnTasksPhysicsOneTeacher;
-
+    private TextView
+            txtPhysicsOneTeacherLogout,
+            txtPhysicsOneTeacherHelp;
+    private Button
+            btnOutlinePhysicsOneTeacher,
+            btnListExamPhysicsOneTeacher,
+            btnNotificationPhysicsOneTeacher,
+            btnTasksPhysicsOneTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_physics_one_teacher);
-
         txtPhysicsOneTeacherLogout = findViewById(R.id.txtPhysicsOneTeacherLogout);
         txtPhysicsOneTeacherHelp = findViewById(R.id.txtPhysicsOneTeacherHelp);
         btnOutlinePhysicsOneTeacher = findViewById(R.id.btnOutLinePhysicsOneTeacher);
         btnListExamPhysicsOneTeacher = findViewById(R.id.btnListExamPhysicsOneTeacher);
         btnNotificationPhysicsOneTeacher = findViewById(R.id.btnNotificationPhysicsOneTeacher);
         btnTasksPhysicsOneTeacher = findViewById(R.id.btnTasksPhysicsOneTeacher);
+
         btnTasksPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +57,6 @@ public class OptionPhysicsOneTeacher extends AppCompatActivity {
                 listExamPhysicsOneTeacher();
             }
         });
-
         btnNotificationPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +67,8 @@ public class OptionPhysicsOneTeacher extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 physicsOneTeacherLogout();
-
             }
         });
-
         txtPhysicsOneTeacherHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

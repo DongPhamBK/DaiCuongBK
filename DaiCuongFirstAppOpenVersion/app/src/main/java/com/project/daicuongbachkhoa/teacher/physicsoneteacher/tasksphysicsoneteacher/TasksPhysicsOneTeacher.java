@@ -31,13 +31,22 @@ import com.project.daicuongbachkhoa.model.Tasks;
 
 public class TasksPhysicsOneTeacher extends AppCompatActivity {
 
-    private Button btnNewTasksPhysicsOneTeacher;
-    private RecyclerView revListTasksPhysicsOneTeacher;
-    private FirebaseUser teacher;
-    private FirebaseDatabase database;
-    private DatabaseReference referenceTasks;
-    private FirebaseRecyclerOptions<Tasks> recyclerOptions;//kiểu dữ liệu
-    private FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneTeacher> adapter;
+    private TextView
+            txtDeleteAllTasksPhysicsOneTeacher;
+    private Button
+            btnNewTasksPhysicsOneTeacher;
+    private RecyclerView
+            revListTasksPhysicsOneTeacher;
+    private FirebaseUser
+            teacher;
+    private FirebaseDatabase
+            database;
+    private DatabaseReference
+            referenceTasks;
+    private FirebaseRecyclerOptions<Tasks>
+            recyclerOptions;
+    private FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneTeacher>
+            adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
         setContentView(R.layout.activity_tasks_physics_one_teacher);
         btnNewTasksPhysicsOneTeacher = findViewById(R.id.btnNewTasksPhysicsOneTeacher);
         revListTasksPhysicsOneTeacher = findViewById(R.id.revListTasksPhysicsOneTeacher);
+        txtDeleteAllTasksPhysicsOneTeacher = findViewById(R.id.txtDeleteAllTasksPhysicsOneTeacher);
         teacher = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
 
@@ -55,11 +65,42 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
                 newTasksPhysicsOneTeacher();
             }
         });
+        txtDeleteAllTasksPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllTasksPhysicsOneTeacher();
+            }
+        });
+    }
 
+    private void deleteAllTasksPhysicsOneTeacher() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        TextView title = new TextView(this);
+        title.setText("XOÁ TOÀN BỘ");
+        title.setPadding(0, 5, 0, 5);
+        title.setTextColor(Color.RED);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(18);
+        builder.setCustomTitle(title);
+        builder.setMessage("Bạn muốn xoá toàn bộ ? Thao tác này không thể khôi phục !");
+        builder.setPositiveButton("XÁC NHẬN", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String teacherID = teacher.getUid();
+                database.getReference("Teachers").child(teacherID).child("Subjects").child("PhysicsOne").child("Tasks").removeValue();
+                Toast.makeText(TasksPhysicsOneTeacher.this, "Đã xoá toàn bộ !", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("THOÁT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();//hiển thị
     }
 
     private void showTasksPhysicsOneTeacher() {
-
         String teacherID = teacher.getUid();
         referenceTasks = database.getReference("Teachers").child(teacherID).child("Subjects").child("PhysicsOne").child("Tasks");
         revListTasksPhysicsOneTeacher.setHasFixedSize(true);
@@ -67,14 +108,12 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);//đảo ngược danh sách, rất thú vị !
         revListTasksPhysicsOneTeacher.setLayoutManager(mLayoutManager);
-
         recyclerOptions = new FirebaseRecyclerOptions.Builder<Tasks>().setQuery(referenceTasks, Tasks.class).build();//khá dài
         adapter = new FirebaseRecyclerAdapter<Tasks, AdapterTasksPhysicsOneTeacher>(recyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull AdapterTasksPhysicsOneTeacher holder, int i, @NonNull Tasks model) {
-                holder.txtTitleTasks.setText(model.getTitleTasks());
-                holder.txtContentTasks.setText(model.getContentTasks());
-
+                holder.txtTitleTasksPhysicsOneTeacher.setText(model.getTitleTasks());
+                holder.txtContentTasksPhysicsOneTeacher.setText(model.getContentTasks());
             }
 
             @NonNull
@@ -84,7 +123,6 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
                 //tạo lập view
                 AdapterTasksPhysicsOneTeacher viewHolder = new AdapterTasksPhysicsOneTeacher(view);
                 return viewHolder;
-
             }
         };
         revListTasksPhysicsOneTeacher.setAdapter(adapter);//ok
@@ -92,7 +130,7 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onStart();//đừng quên hàm này, nó là sự lắng nghe thay đổi !
+        super.onStart();
         adapter.startListening();
     }
 
@@ -134,9 +172,7 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
                 String content = updateContentTasks.getText().toString();
                 Tasks tasks = new Tasks(title, content);
                 referenceTasks.child(key).setValue(tasks);
-
                 Toast.makeText(TasksPhysicsOneTeacher.this, "Thay đổi thành công", Toast.LENGTH_SHORT).show();
-
             }
         });
         builder.setNegativeButton("THOÁT", new DialogInterface.OnClickListener() {
@@ -145,12 +181,11 @@ public class TasksPhysicsOneTeacher extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         builder.show();//hiển thị
-
     }
-    private void deleteTask(String key){
-        referenceTasks.child(key).removeValue();//xoá
+
+    private void deleteTask(String key) {
+        referenceTasks.child(key).removeValue();
     }
 
     private void newTasksPhysicsOneTeacher() {

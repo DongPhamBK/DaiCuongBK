@@ -13,8 +13,11 @@ import com.project.daicuongbachkhoa.R;
 
 public class TeacherHelp extends AppCompatActivity {
 
-    private TextView txtHelpPhysicsOneTeacher;
-    private Button btnGmailHelpPhysicsOneTeacher, btnFacebooklHelpPhysicsOneTeacher;
+    private TextView
+            txtHelpPhysicsOneTeacher;
+    private Button
+            btnGmailHelpPhysicsOneTeacher,
+            btnFacebooklHelpPhysicsOneTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class TeacherHelp extends AppCompatActivity {
         txtHelpPhysicsOneTeacher = findViewById(R.id.txtHelpPhysicsOneTeacher);
         btnGmailHelpPhysicsOneTeacher = findViewById(R.id.btnGmailHelpPhysicsOneTeacher);
         btnFacebooklHelpPhysicsOneTeacher = findViewById(R.id.btnFacebookHelpPhysicsOneTeacher);
+
         btnGmailHelpPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

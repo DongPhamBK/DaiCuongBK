@@ -19,20 +19,22 @@ import com.project.daicuongbachkhoa.R;
 
 public class ResetPasswordUser extends AppCompatActivity {
 
-
-    private EditText txtEmailResetPassword;
-    private Button btnResetPassword;
-    private ProgressBar progressBarReset;
-    private FirebaseAuth mAuth;
+    private EditText
+            txtEmailResetPassword;
+    private Button
+            btnResetPassword;
+    private ProgressBar
+            progressBarReset;
+    private FirebaseAuth
+            mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password_user);
-
         txtEmailResetPassword = findViewById(R.id.txtEmailResetPassword);
         btnResetPassword = findViewById(R.id.btnResetPassword);
-        progressBarReset = findViewById(R.id.progressBarReset);// tiến trình trạng thái
+        progressBarReset = findViewById(R.id.progressBarReset);
         mAuth = FirebaseAuth.getInstance();
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
@@ -43,8 +45,8 @@ public class ResetPasswordUser extends AppCompatActivity {
         });
     }
 
+    //reset pass
     private void resetPass() {
-
         //create process reset password
         progressBarReset.setVisibility(View.VISIBLE);
         btnResetPassword.setEnabled(false);
@@ -77,7 +79,6 @@ public class ResetPasswordUser extends AppCompatActivity {
         mAuth.sendPasswordResetEmail(emailResetPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
                 if (task.isSuccessful()) {
                     Toast.makeText(ResetPasswordUser.this, "Reset mật khẩu thành công", Toast.LENGTH_SHORT).show();
                     btnResetPassword.setText("Thành công");

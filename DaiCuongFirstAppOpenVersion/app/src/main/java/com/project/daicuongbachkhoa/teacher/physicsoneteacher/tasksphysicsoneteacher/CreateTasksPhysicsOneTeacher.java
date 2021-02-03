@@ -21,12 +21,19 @@ import com.project.daicuongbachkhoa.model.Tasks;
 
 public class CreateTasksPhysicsOneTeacher extends AppCompatActivity {
 
-    private EditText txtNewTitleTasksPhysicsOneTeacher, txtNewContentTasksPhysicsOneTeacher;
-    private Button btnConfirmNewTasksPhysicsOneTeacher;
-    private FirebaseUser teacher;
-    private FirebaseDatabase database;
-    private DatabaseReference referenceNewTasks;
-    private String teacherID;
+    private EditText
+            txtNewTitleTasksPhysicsOneTeacher,
+            txtNewContentTasksPhysicsOneTeacher;
+    private Button
+            btnConfirmNewTasksPhysicsOneTeacher;
+    private FirebaseUser
+            teacher;
+    private FirebaseDatabase
+            database;
+    private DatabaseReference
+            referenceNewTasks;
+    private String
+            teacherID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +50,32 @@ public class CreateTasksPhysicsOneTeacher extends AppCompatActivity {
         btnConfirmNewTasksPhysicsOneTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newTitle = txtNewTitleTasksPhysicsOneTeacher.getText().toString();
-                String newContent = txtNewContentTasksPhysicsOneTeacher.getText().toString();
-                if (!TextUtils.isEmpty(newTitle) && !TextUtils.isEmpty(newContent)) {
-                    Tasks tasks = new Tasks(newTitle, newContent);
-                    referenceNewTasks.push().setValue(tasks).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Tạo mới nhiệm vụ thành công !", Toast.LENGTH_SHORT).show();
-                            txtNewTitleTasksPhysicsOneTeacher.setText("");
-                            txtNewContentTasksPhysicsOneTeacher.setText("");
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Hmmm ! Có vẻ có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }else {
-                    Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Vui lòng điền đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
-                }
+                createTasksPhysicsOneTeacher();
             }
         });
+    }
+
+    private void createTasksPhysicsOneTeacher() {
+        String newTitle = txtNewTitleTasksPhysicsOneTeacher.getText().toString();
+        String newContent = txtNewContentTasksPhysicsOneTeacher.getText().toString();
+        if (!TextUtils.isEmpty(newTitle) && !TextUtils.isEmpty(newContent)) {
+            Tasks tasks = new Tasks(newTitle, newContent);
+            referenceNewTasks.push().setValue(tasks).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Tạo mới nhiệm vụ thành công !", Toast.LENGTH_SHORT).show();
+                    txtNewTitleTasksPhysicsOneTeacher.setText("");
+                    txtNewContentTasksPhysicsOneTeacher.setText("");
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Hmmm ! Có vẻ có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(CreateTasksPhysicsOneTeacher.this, "Vui lòng điền đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
+        }
     }
 }

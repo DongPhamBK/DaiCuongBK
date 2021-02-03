@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.daicuongbachkhoa.R;
 
 public class AdapterTasksPhysicsOneStudent extends RecyclerView.ViewHolder {
-    public TextView txtTitleTasks;
-    public TextView txtContentTasks;
+
+    public TextView
+            txtTitleTasksPhysicsOneStudent,
+            txtContentTasksPhysicsOneStudent;
+
     public AdapterTasksPhysicsOneStudent(@NonNull View itemView) {
         super(itemView);
-        txtTitleTasks = itemView.findViewById(R.id.txtTitleTasks);
-        txtContentTasks = itemView.findViewById(R.id.txtContentTasks);
+        txtTitleTasksPhysicsOneStudent = itemView.findViewById(R.id.txtTitleTasks);
+        txtContentTasksPhysicsOneStudent = itemView.findViewById(R.id.txtContentTasks);
     }
 }

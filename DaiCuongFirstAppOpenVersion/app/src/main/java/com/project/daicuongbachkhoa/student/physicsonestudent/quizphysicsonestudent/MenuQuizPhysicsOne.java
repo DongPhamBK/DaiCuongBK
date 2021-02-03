@@ -18,18 +18,28 @@ import java.util.List;
 
 public class MenuQuizPhysicsOne extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_QUIZ = 1;
-    public static final String EXTRA_LEVEL = "extraLevel";
-    public static final String EXTRA_CATEGORY_ID = "extraCategoryId";
-    public static final String EXTRA_CATEGORY_NAME = "extraCategoryName";
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String KEY_HIGHSCOREPHYSICSONE = "keyHighscorePhysicsOne";
-
-    private TextView txtHightScorePhysicsOne;
-    private Spinner spCategoryPhysicsOne;
-    private Spinner spLevelPhysicsOne;
-    private int highscore;
-    private Button btnStartQuizPhysicsOne;
+    private static final int
+            REQUEST_CODE_QUIZ = 1;
+    public static final String
+            EXTRA_LEVEL = "extraLevel";
+    public static final String
+            EXTRA_CATEGORY_ID = "extraCategoryId";
+    public static final String
+            EXTRA_CATEGORY_NAME = "extraCategoryName";
+    public static final String
+            SHARED_PREFS = "sharedPrefs";
+    public static final String
+            KEY_HIGHSCOREPHYSICSONE = "keyHighscorePhysicsOne";
+    private TextView
+            txtHightScorePhysicsOne;
+    private Spinner
+            spCategoryPhysicsOne;
+    private Spinner
+            spLevelPhysicsOne;
+    private int
+            highscore;
+    private Button
+            btnStartQuizPhysicsOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +51,6 @@ public class MenuQuizPhysicsOne extends AppCompatActivity {
 
         loadCategories();
         loadLevels();
-         /*
-        String[] levels = Question.getAllLevels();
-        ArrayAdapter<String> adaperLevel = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,levels);
-        adaperLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spLevelPhysicsOne.setAdapter(adaperLevel);*/
         loadHighscore();
         btnStartQuizPhysicsOne = findViewById(R.id.btnStartQuizPhysicsOne);
         btnStartQuizPhysicsOne.setOnClickListener(new View.OnClickListener() {
@@ -62,33 +67,26 @@ public class MenuQuizPhysicsOne extends AppCompatActivity {
         String categoryName = selectedCategory.getName();
         String level = spLevelPhysicsOne.getSelectedItem().toString();
         Intent intent = new Intent(MenuQuizPhysicsOne.this, QuizPhysicsOne.class);
-        intent.putExtra(EXTRA_CATEGORY_ID, categoryId);// để lưu trữ trong máy !
+        intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
         intent.putExtra(EXTRA_CATEGORY_NAME, categoryName);
         intent.putExtra(EXTRA_LEVEL, level);
         startActivityForResult(intent, REQUEST_CODE_QUIZ);
     }
 
-    // cập nhật màn hình !
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_CODE_QUIZ) {
             if (resultCode == RESULT_OK) {
                 int score = data.getIntExtra(QuizPhysicsOne.EXTRA_SCORE, 0);
-
                 if (score > highscore) {
-
                     updateHighscore(score);
                 }
-
             }
         }
     }
 
-    //lấy chương
     private void loadCategories() {
-
         DbHelperQuizPhysicsOne dbHelper = DbHelperQuizPhysicsOne.getInstace(this);
         List<CategoryQuizPhysicsOne> categories = dbHelper.getAllCategories();
         ArrayAdapter<CategoryQuizPhysicsOne> adapterCategories = new ArrayAdapter<>(this,
@@ -97,7 +95,6 @@ public class MenuQuizPhysicsOne extends AppCompatActivity {
         spCategoryPhysicsOne.setAdapter(adapterCategories);
     }
 
-    // lấy mức độ
     private void loadLevels() {
         String[] difficultyLevels = QuestionQuizPhysicsOne.getAllDifficultyLevels();
         ArrayAdapter<String> adaperDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficultyLevels);
@@ -105,7 +102,6 @@ public class MenuQuizPhysicsOne extends AppCompatActivity {
         spLevelPhysicsOne.setAdapter(adaperDifficulty);
     }
 
-    // Lấy điểm cao !
     private void loadHighscore() {
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         highscore = prefs.getInt(KEY_HIGHSCOREPHYSICSONE, 0);
@@ -114,14 +110,12 @@ public class MenuQuizPhysicsOne extends AppCompatActivity {
 
     }
 
-    // cập nhật điểm cao nhất !
     private void updateHighscore(int highscoreNew) {
-        highscore = highscoreNew;// cập nhật điểm cao
+        highscore = highscoreNew;
         txtHightScorePhysicsOne.setText("Điểm cao nhất: " + highscore);
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(KEY_HIGHSCOREPHYSICSONE, highscore);
         editor.apply();
     }
-
 }

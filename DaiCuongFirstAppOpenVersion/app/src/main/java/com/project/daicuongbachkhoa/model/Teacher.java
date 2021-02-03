@@ -1,8 +1,12 @@
 package com.project.daicuongbachkhoa.model;
 
 public class Teacher {
-
-    private String nameTeacher,idTeacher,codeTeacher,emailTeacher,passTeacher;
+    private String
+            nameTeacher,
+            idTeacher,
+            codeTeacher,
+            emailTeacher,
+            passTeacher;
 
     public Teacher() {
     }

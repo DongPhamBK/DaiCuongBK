@@ -1,15 +1,31 @@
 package com.project.daicuongbachkhoa.model;
 
 public class News {
-    private String titleNews, timeNews, contentNews;
+
+    private String
+            imgNews,
+            titleNews,
+            dateNews,
+            contentNews,
+            linkNews;
 
     public News() {
     }
 
-    public News(String titleNews, String timeNews, String contentNews) {
+    public News(String imgNews, String titleNews, String dateNews, String contentNews, String linkNews) {
+        this.imgNews = imgNews;
         this.titleNews = titleNews;
-        this.timeNews = timeNews;
+        this.dateNews = dateNews;
         this.contentNews = contentNews;
+        this.linkNews = linkNews;
+    }
+
+    public String getImgNews() {
+        return imgNews;
+    }
+
+    public void setImgNews(String imgNews) {
+        this.imgNews = imgNews;
     }
 
     public String getTitleNews() {
@@ -20,12 +36,12 @@ public class News {
         this.titleNews = titleNews;
     }
 
-    public String getTimeNews() {
-        return timeNews;
+    public String getDateNews() {
+        return dateNews;
     }
 
-    public void setTimeNews(String timeNews) {
-        this.timeNews = timeNews;
+    public void setDateNews(String dateNews) {
+        this.dateNews = dateNews;
     }
 
     public String getContentNews() {
@@ -34,5 +50,13 @@ public class News {
 
     public void setContentNews(String contentNews) {
         this.contentNews = contentNews;
+    }
+
+    public String getLinkNews() {
+        return linkNews;
+    }
+
+    public void setLinkNews(String linkNews) {
+        this.linkNews = linkNews;
     }
 }

@@ -7,7 +7,7 @@
 
 
     <Button
-        android:id="@+id/btnChapterPhysicsOneStudent"
+        android:id="@+id/btnChapterStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bk"
@@ -22,13 +22,13 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txtChapterNamePhysicsOneStudent"
+            android:id="@+id/txtChapterNameStudent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chương 1" />
 
         <TextView
-            android:id="@+id/txtChapterContentPhysicsOneStudent"
+            android:id="@+id/txtChapterContentStudent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nội dung" />

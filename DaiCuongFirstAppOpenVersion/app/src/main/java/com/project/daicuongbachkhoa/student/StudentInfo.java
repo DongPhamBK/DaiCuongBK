@@ -23,18 +23,20 @@ import com.project.daicuongbachkhoa.model.Student;
 
 public class StudentInfo extends AppCompatActivity {
 
-    private FirebaseUser user;
-    private DatabaseReference reference;
-    private String userId;
-    private Button btnConti;
+    private FirebaseUser
+            user;
+    private DatabaseReference
+            reference;
+    private String
+            userId;
+    private Button
+            btnConti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_info);
-
         btnConti = findViewById(R.id.btnConti);
-
         btnConti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,9 +82,4 @@ public class StudentInfo extends AppCompatActivity {
             }
         });
     }
-    /*private void logoutAccount() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(HomeActivity.this, LoginUser.class));
-        finish();
-    }*/
 }

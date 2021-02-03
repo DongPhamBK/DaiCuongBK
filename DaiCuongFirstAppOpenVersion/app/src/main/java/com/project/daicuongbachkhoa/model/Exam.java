@@ -1,7 +1,11 @@
 package com.project.daicuongbachkhoa.model;
 
 public class Exam {
-   private String examCode, examName, examTeacher, examDeadline;
+    private String
+            examCode,
+            examName,
+            examTeacher,
+            examDeadline;
 
     public Exam() {
     }

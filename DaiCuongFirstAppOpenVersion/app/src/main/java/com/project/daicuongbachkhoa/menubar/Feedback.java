@@ -13,18 +13,19 @@ import com.project.daicuongbachkhoa.R;
 
 public class Feedback extends AppCompatActivity {
 
-    private Button btnFace, btnEmail;
-    private ImageView imgFeedbackGoHome;
+    private Button
+            btnFacebook,
+            btnEmail;
+    private ImageView
+            imgFeedbackGoHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-
         imgFeedbackGoHome = findViewById(R.id.imgFeedbackGoHome);
-        btnFace = findViewById(R.id.btnFace);
+        btnFacebook = findViewById(R.id.btnFacebook);
         btnEmail = findViewById(R.id.btnEmail);
-
 
         imgFeedbackGoHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,13 +33,12 @@ public class Feedback extends AppCompatActivity {
                 feedbackGoHome();
             }
         });
-        btnFace.setOnClickListener(new View.OnClickListener() {
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openUrlLink("https://www.facebook.com/profile.php?id=100012086771102");
             }
         });
-
         btnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,12 +47,12 @@ public class Feedback extends AppCompatActivity {
         });
     }
 
+    //return
     private void feedbackGoHome() {
-       // startActivity(new Intent(Feedback.this, MenuBar.class));
         finish();
-
     }
 
+    //go to link
     public void openUrlLink(String url) {
         Uri uri = Uri.parse(url);
         Intent goFace = new Intent(Intent.ACTION_VIEW, uri);

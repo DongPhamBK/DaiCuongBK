@@ -30,49 +30,62 @@ import com.project.daicuongbachkhoa.student.physicsonestudent.examphysicsonestud
 
 public class QuizPhysicsOne extends AppCompatActivity {
 
-    public static final String EXTRA_SCORE = "extraScore";
-    private static final long COUNTDOWN_IN_MILLIS = 15000;// thời gian lựa chọn
-
-    private static final String KEY_SCORE = "keyScore";
-    private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
-    private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
-    private static final String KEY_ANSWERED = "keyAnswered";
-    private static final String KEY_QUESTION_LIST = "keyQuestionList";
-
-    private TextView txtQuestionPhysicsOne;
-    private TextView txtYourScorePhysicsOne;
-    private TextView txtQuestionCountPhysicsOne;
-    private TextView txtCategoryPhysicsOne;
-    private TextView txtLevelPhysicsOne;
-
-    private TextView txtCountDownPhysisOne;
-    private RadioGroup radGroupPhysicsOne;
-    private RadioButton radOption1PhysicsOne;
-    private RadioButton radOption2PhysicsOne;
-    private RadioButton radOption3PhysicsOne;
-    private Button btnConfirmPhysicsOne;
-    private TextView txtAnswerPhysicsOne;
-
-    private ColorStateList textColorDefaultRb;
-    private ColorStateList textColorDefaultCd;
-    private CountDownTimer countDownTimer;
+    public static final String
+            EXTRA_SCORE = "extraScore";
+    private static final long
+            COUNTDOWN_IN_MILLIS = 15000;// thời gian lựa chọn
+    private static final String
+            KEY_SCORE = "keyScore";
+    private static final String
+            KEY_QUESTION_COUNT = "keyQuestionCount";
+    private static final String
+            KEY_MILLIS_LEFT = "keyMillisLeft";
+    private static final String
+            KEY_ANSWERED = "keyAnswered";
+    private static final String
+            KEY_QUESTION_LIST = "keyQuestionList";
+    private TextView
+            txtQuestionPhysicsOne,
+            txtYourScorePhysicsOne,
+            txtQuestionCountPhysicsOne,
+            txtCategoryPhysicsOne,
+            txtLevelPhysicsOne,
+            txtCountDownPhysisOne;
+    private RadioGroup
+            radGroupPhysicsOne;
+    private RadioButton
+            radOption1PhysicsOne,
+            radOption2PhysicsOne,
+            radOption3PhysicsOne;
+    private Button
+            btnConfirmPhysicsOne;
+    private TextView
+            txtAnswerPhysicsOne;
+    private ColorStateList
+            textColorDefaultRb;
+    private ColorStateList
+            textColorDefaultCd;
+    private CountDownTimer
+            countDownTimer;
     private long timeLeftInMillis;
-
-
-    private ArrayList<QuestionQuizPhysicsOne> questionList;
-    private int questionCounter;// bộ đếm câu hỏi
-    private int questionCountTotal;// tổng số câu hỏi
-    private QuestionQuizPhysicsOne currentQuestion;
-    private int yourscore;
-    private boolean answered;
-    private long backPressdTime;
-
+    private ArrayList<QuestionQuizPhysicsOne>
+            questionList;
+    private int
+            questionCounter,
+            questionCountTotal;
+    private QuestionQuizPhysicsOne
+            currentQuestion;
+    private int
+            yourscore;
+    private boolean
+            answered;
+    private long
+            backPressdTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_physics_one);
-
         txtQuestionPhysicsOne = findViewById(R.id.txtQuestionPhysicsOne);
         txtYourScorePhysicsOne = findViewById(R.id.txtYourScorePhysicsOne);
         txtCountDownPhysisOne = findViewById(R.id.txtCountDownPhysicsOne);
@@ -92,7 +105,6 @@ public class QuizPhysicsOne extends AppCompatActivity {
         int categoryId = intent.getIntExtra(MenuQuizPhysicsOne.EXTRA_CATEGORY_ID, 0);
         String categoryName = intent.getStringExtra(MenuQuizPhysicsOne.EXTRA_CATEGORY_NAME);
         String level = intent.getStringExtra(MenuQuizPhysicsOne.EXTRA_LEVEL);
-
         txtCategoryPhysicsOne.setText("Chương: " + categoryName);
         txtLevelPhysicsOne.setText("Mức độ: " + level);
         if (savedInstanceState == null) {
@@ -109,7 +121,6 @@ public class QuizPhysicsOne extends AppCompatActivity {
             yourscore = savedInstanceState.getInt(KEY_SCORE);
             timeLeftInMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
             answered = savedInstanceState.getBoolean(KEY_ANSWERED);
-
             if (!answered) {
                 startCountDown();
             } else {
@@ -127,44 +138,37 @@ public class QuizPhysicsOne extends AppCompatActivity {
                         Toast.makeText(QuizPhysicsOne.this, "Vui lòng chọn đáp án !", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    showNextQuestion();// câu hỏi tiếp theo
+                    showNextQuestion();
                 }
             }
         });
 
     }
 
-    // hàm hiển thị câu hỏi tiếp theo
     private void showNextQuestion() {
         txtAnswerPhysicsOne.setText("");
-        txtQuestionPhysicsOne.setBackgroundColor(Color.WHITE);// thêm câu mới, đổi lại màu của câu hỏi
-        //txtQuestionPhysicsOne.setBackgroundColor(Color.rgb(221, 221, 221));// thêm mới, đổi lại màu của câu hỏi
+        txtQuestionPhysicsOne.setBackgroundColor(Color.WHITE);
         radOption1PhysicsOne.setTextColor(textColorDefaultRb);
         radOption2PhysicsOne.setTextColor(textColorDefaultRb);
         radOption3PhysicsOne.setTextColor(textColorDefaultRb);
         radGroupPhysicsOne.clearCheck();
-        if (questionCounter < questionCountTotal) {// nếu vẫn còn câu hỏi
-
+        if (questionCounter < questionCountTotal) {
             currentQuestion = questionList.get(questionCounter);
-
-            txtQuestionPhysicsOne.setText(currentQuestion.getQuestion());// hiển thị câu hỏi tiếp theo
+            txtQuestionPhysicsOne.setText(currentQuestion.getQuestion());
             radOption1PhysicsOne.setText(currentQuestion.getOption1());
             radOption2PhysicsOne.setText(currentQuestion.getOption2());
             radOption3PhysicsOne.setText(currentQuestion.getOption3());
-            questionCounter++;// tăng bộ đếm
+            questionCounter++;
             txtQuestionCountPhysicsOne.setText("Câu hỏi: " + questionCounter + "/" + questionCountTotal);
             answered = false;
-            //btnConfirmPhysicsOne.setBackgroundColor(Color.YELLOW);
             btnConfirmPhysicsOne.setText("XÁC NHẬN");
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
-
         } else {
             finishQuiz();
         }
     }
 
-    // bộ đếm thời gian
     private void startCountDown() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -172,7 +176,6 @@ public class QuizPhysicsOne extends AppCompatActivity {
                 timeLeftInMillis = l;
                 updateCountDownText();
             }
-
             @Override
             public void onFinish() {
                 timeLeftInMillis = 0;
@@ -182,7 +185,6 @@ public class QuizPhysicsOne extends AppCompatActivity {
         }.start();
     }
 
-    // định dạng bộ đếm thời gian
     private void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
@@ -197,7 +199,6 @@ public class QuizPhysicsOne extends AppCompatActivity {
         }
     }
 
-    // kiểm tra kết quả
     private void checkAnswer() {
         answered = true;
         countDownTimer.cancel();
@@ -216,14 +217,10 @@ public class QuizPhysicsOne extends AppCompatActivity {
 
     }
 
-    // hiển thị lời giải
     private void showSolution() {
-
-        // đáp án nào đúng sẽ có màu xanh
         radOption1PhysicsOne.setTextColor(Color.RED);
         radOption2PhysicsOne.setTextColor(Color.RED);
         radOption3PhysicsOne.setTextColor(Color.RED);
-
         switch (currentQuestion.getAnswerNum()) {
             case 1:
                 radOption1PhysicsOne.setTextColor(Color.GREEN);
@@ -237,18 +234,12 @@ public class QuizPhysicsOne extends AppCompatActivity {
                 radOption3PhysicsOne.setTextColor(Color.GREEN);
                 txtAnswerPhysicsOne.setText("Đáp án đúng: C");
                 break;
-
-
         }
         if (questionCounter < questionCountTotal) {
             btnConfirmPhysicsOne.setText("Tiếp theo");
-            //btnConfirmPhysicsOne.setTextColor(Color.CYAN);
-            //btnConfirmPhysicsOne.setBackgroundColor(Colo);
-            //btnConfirmPhysicsOne.setBackgroundColor(Color.rgb(100, 132, 124));
         } else {
             txtYourScorePhysicsOne.setBackgroundColor(Color.YELLOW);
             btnConfirmPhysicsOne.setText("Điểm của bạn:" + yourscore);
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Chúc mừng ! Điểm của bạn là:\n\n" + "                                      " + yourscore)
                     .setCancelable(false)
@@ -267,11 +258,9 @@ public class QuizPhysicsOne extends AppCompatActivity {
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_SCORE, yourscore);
         setResult(RESULT_OK, resultIntent);
-
         finish();
     }
 
-    //thời gian giữ nút back để thoát !
     @Override
     public void onBackPressed() {
 

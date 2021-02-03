@@ -13,16 +13,17 @@ import com.project.daicuongbachkhoa.R;
 
 public class Author extends AppCompatActivity {
 
-    private Button btnBlog;
-    private ImageView imgAuthorGoHome;
+    private Button
+            btnBlog;
+    private ImageView
+            imgAuthorGoHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author);
-
         imgAuthorGoHome = findViewById(R.id.imgFeedbackGoHome);
         btnBlog = findViewById(R.id.btnBlog);
-
 
         btnBlog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +31,6 @@ public class Author extends AppCompatActivity {
                 openBlog("https://ptdonghust.blogspot.com");
             }
         });
-
 
         imgAuthorGoHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,11 +40,12 @@ public class Author extends AppCompatActivity {
         });
     }
 
+    //return
     private void authorGoHome() {
-        //startActivity(new Intent(Author.this, MenuBar.class));
         finish();
     }
 
+    //open blog
     private void openBlog(String url) {
         Uri uri = Uri.parse(url);
         Intent goWeb = new Intent(Intent.ACTION_VIEW, uri);

@@ -24,19 +24,27 @@ import com.project.daicuongbachkhoa.model.Teacher;
 
 public class RegisterTeacher extends AppCompatActivity {
 
-    private EditText txtNameTeacherRegister, txtIdTeacherRegister, txtEmailTeacherRegister;
-    private EditText txtPasswordTeacherRegister, txtPasswordConfirmTeacherRegister, txtSubjectTeacherCode;
-    private Button btnTeacherRegister;
-    private TextView txtTeacherLogin;
-    private ProgressBar progressBarTeacher;
-    private FirebaseAuth auth;
+    private EditText
+            txtNameTeacherRegister,
+            txtIdTeacherRegister,
+            txtEmailTeacherRegister;
+    private EditText
+            txtPasswordTeacherRegister,
+            txtPasswordConfirmTeacherRegister,
+            txtSubjectTeacherCode;
+    private Button
+            btnTeacherRegister;
+    private TextView
+            txtTeacherLogin;
+    private ProgressBar
+            progressBarTeacher;
+    private FirebaseAuth
+            auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_teacher);
-
-        //find view by Id
         txtNameTeacherRegister = findViewById(R.id.txtNameTeacherRegister);
         txtIdTeacherRegister = findViewById(R.id.txtIdTeacherRegister);
         txtEmailTeacherRegister = findViewById(R.id.txtEmailTeacherRegister);
@@ -48,7 +56,6 @@ public class RegisterTeacher extends AppCompatActivity {
         progressBarTeacher = findViewById(R.id.progressBarTeacher);
         auth = FirebaseAuth.getInstance();
 
-        //Control
         btnTeacherRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,17 +68,17 @@ public class RegisterTeacher extends AppCompatActivity {
                 teacherLogin();
             }
         });
-
     }
 
+    //login if you are teacher
     private void teacherLogin() {
         Intent intent = new Intent(RegisterTeacher.this, LoginUser.class);
         startActivity(intent);
         finish();
     }
 
+    //register if you are teacher
     private void teacherRegister() {
-        // get data input
         final String nameTeacherRegister = txtNameTeacherRegister.getText().toString().trim();
         final String idTeacherRegister = txtIdTeacherRegister.getText().toString().trim();
         final String emailTeacherRegister = txtEmailTeacherRegister.getText().toString().trim();
@@ -108,7 +115,6 @@ public class RegisterTeacher extends AppCompatActivity {
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(emailTeacherRegister).matches()) {
-            // check mail
             txtEmailTeacherRegister.setError("Gmail không hợp lệ !");
             txtEmailTeacherRegister.requestFocus();
             progressBarTeacher.setVisibility(View.GONE);
@@ -156,13 +162,13 @@ public class RegisterTeacher extends AppCompatActivity {
             btnTeacherRegister.setEnabled(true);
             return;
         }
-        //mã từng bộ môn
-        /*
-        Đại số: ds2020
-        Vật lý 1: vl12020
-        Pháp luật: pl2020
-         */
 
+        /*
+        code subject
+        algebra: ds2020
+        physicsone: vl12020
+        law: pl2020
+         */
         //create account
         if (subjectTeacherCode.equals("ds2020") || subjectTeacherCode.equals("vl12020") || subjectTeacherCode.equals("pl2020")) {
             auth.createUserWithEmailAndPassword(emailTeacherRegister, passwordTeacherRegister)
@@ -180,11 +186,7 @@ public class RegisterTeacher extends AppCompatActivity {
                                             progressBarTeacher.setVisibility(View.GONE);
                                             btnTeacherRegister.setText("Thành Công");
                                             btnTeacherRegister.setTextColor(Color.CYAN);
-                                            //btnRegister.setEnabled(true);
-                                            //finish();
                                             FirebaseAuth.getInstance().signOut();
-                                            // nếu không có thao tác này, việc xác nhận email lần đầu coi như vô nghĩa !
-                                            // vì hệ thống sẽ tự động đăng nhập luôn, bỏ qua việc xác nhận email !
                                         } else {
                                             Toast.makeText(RegisterTeacher.this, "Chưa được, thử lại đi !", Toast.LENGTH_LONG).show();
                                             progressBarTeacher.setVisibility(View.GONE);

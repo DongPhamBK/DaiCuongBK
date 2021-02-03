@@ -1,37 +1,30 @@
 package com.project.daicuongbachkhoa.student.physicsonestudent;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.project.daicuongbachkhoa.student.physicsonestudent.examphysicsonestudent.ExamPhysicsOneStudent;
-import com.project.daicuongbachkhoa.student.physicsonestudent.examphysicsonestudent.ListExamPhysicsOneStudent;
-import com.project.daicuongbachkhoa.student.physicsonestudent.quizphysicsonestudent.MenuQuizPhysicsOne;
 import com.project.daicuongbachkhoa.R;
-import com.project.daicuongbachkhoa.student.physicsonestudent.statisticsphysicsonestudent.StatisticsPhysicsOneStudent;
+import com.project.daicuongbachkhoa.student.physicsonestudent.examphysicsonestudent.ListExamPhysicsOneStudent;
+import com.project.daicuongbachkhoa.student.physicsonestudent.historyphysicsonestudent.HistoryPhysicsOneStudent;
+import com.project.daicuongbachkhoa.student.physicsonestudent.quizphysicsonestudent.MenuQuizPhysicsOne;
 import com.project.daicuongbachkhoa.student.physicsonestudent.tasksphysicsonestudent.TasksPhysicsOneStudent;
 import com.project.daicuongbachkhoa.student.physicsonestudent.theoryphysicsonestudent.ListChapterPhysicsOneStudent;
-import com.project.daicuongbachkhoa.teacher.physicsoneteacher.tasksphysicsoneteacher.TasksPhysicsOneTeacher;
 
 public class OptionPhysicsOneStudent extends AppCompatActivity {
 
-    private Button btnOutlinePhysicsOneStudent,
+    private Button
+            btnOutlinePhysicsOneStudent,
             btnTheoryPhysicsOneStudent,
             btnQuizPhysicsOne,
             btnListExamPhysicsOneStudent,
@@ -48,8 +41,9 @@ public class OptionPhysicsOneStudent extends AppCompatActivity {
         btnQuizPhysicsOne = findViewById(R.id.btnQuizPhysicsOne);
         btnListExamPhysicsOneStudent = findViewById(R.id.btnListExamPhysicsOneStudent);
         btnExperimentPhysicsOneStudent = findViewById(R.id.btnExperimentPhysicsOneStudent);
-        btnStatisticsPhysicsOneStudent = findViewById(R.id.btnStatisticsPhysicsOneStudent);
+        btnStatisticsPhysicsOneStudent = findViewById(R.id.btnHistoryPhysicsOneStudent);
         btnTasksPhysicsOneStudent = findViewById(R.id.btnTasksPhysicsOneStudent);
+
         btnTasksPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,63 +95,37 @@ public class OptionPhysicsOneStudent extends AppCompatActivity {
         ValueEventListener referenceTasks = database.getReference("Students").child(studentID).child("Tasks").child("PhysicsOne").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String idTeacher = String.valueOf(snapshot.child("idTeacher").getValue().toString());
-                String linkGroup = String.valueOf(snapshot.child("linkGroup").getValue().toString());
-                Intent intent = new Intent(OptionPhysicsOneStudent.this, TasksPhysicsOneStudent.class);
-                intent.putExtra("ID_TEACHER_PHYSICS_ONE_STUDENT", idTeacher);
-                intent.putExtra("LINK_GROUP_PHYSICS_ONE_STUDENT", linkGroup);
-                startActivity(intent);
+               // try {
+                    String idTeacher = String.valueOf(snapshot.child("idTeacher").getValue().toString());
+                    String linkGroup = String.valueOf(snapshot.child("linkGroup").getValue().toString());
+                    Intent intent = new Intent(OptionPhysicsOneStudent.this, TasksPhysicsOneStudent.class);
+                    intent.putExtra("ID_TEACHER_PHYSICS_ONE_STUDENT", idTeacher);
+                    intent.putExtra("LINK_GROUP_PHYSICS_ONE_STUDENT", linkGroup);
+                    startActivity(intent);
+              /*  } catch (Exception e) {
+                    createDataDefault();
+                } finally {
+                    createDataDefault();
+                    String idTeacher = String.valueOf(snapshot.child("idTeacher").getValue().toString());
+                    String linkGroup = String.valueOf(snapshot.child("linkGroup").getValue().toString());
+                    Intent intent = new Intent(OptionPhysicsOneStudent.this, TasksPhysicsOneStudent.class);
+                    intent.putExtra("ID_TEACHER_PHYSICS_ONE_STUDENT", idTeacher);
+                    intent.putExtra("LINK_GROUP_PHYSICS_ONE_STUDENT", linkGroup);
+                    startActivity(intent);
+                }*/
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(OptionPhysicsOneStudent.this, "Hmmm ! Có vẻ như có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OptionPhysicsOneStudent.this, "Hmmm ! Có vẻ như có lỗi xảy ra ! Vui lòng liên hệ nhóm phát triển để khắc phục !", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        // startActivity(new Intent(OptionPhysicsOneStudent.this, TasksPhysicsOneStudent.class));
     }
 
     private void statisticsPhysicsOneStudent() {
-        startActivity(new Intent(OptionPhysicsOneStudent.this, StatisticsPhysicsOneStudent.class));
+        startActivity(new Intent(OptionPhysicsOneStudent.this, HistoryPhysicsOneStudent.class));
     }
 
-
-    /* BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
-         @Override
-         public void onReceive(Context context, Intent intent) {
-             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-             if (connectivityManager.getActiveNetworkInfo() != null) {
-                 btnListExamPhysicsOneStudent.setEnabled(true);// have internet
-                 btnListExamPhysicsOneStudent.setTextColor(Color.WHITE);
-                 //Toast.makeText(OptionPhysicsOneStudent.this, "Bạn đã có thể đăng nhập", Toast.LENGTH_LONG).show();
-             } else {
-                 btnListExamPhysicsOneStudent.setEnabled(false);// need internet
-                 btnListExamPhysicsOneStudent.setTextColor(Color.CYAN);
-                 //Toast.makeText(OptionPhysicsOneStudent.this, "Vui lòng mở Internet lên !", Toast.LENGTH_LONG).show();
-             }
-
-         }
-     };
-
-     @Override
-     // check wifi on/off
-     protected void onResume() {
-         super.onResume();
-         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-         registerReceiver(wifiReceiver, filter);
-
-     }
-
-     @Override
-     protected void onPause() {
-         super.onPause();
-         if (wifiReceiver != null) {
-             unregisterReceiver(wifiReceiver);
-         }
-     }
- */
     private void listExamPhysicsOneStudent() {
         startActivity(new Intent(OptionPhysicsOneStudent.this, ListExamPhysicsOneStudent.class));
     }
@@ -178,4 +146,11 @@ public class OptionPhysicsOneStudent extends AppCompatActivity {
         startActivity(new Intent(OptionPhysicsOneStudent.this, ExperimentPhysicsOneStudent.class));
     }
 
+    private void createDataDefault() {
+        FirebaseUser student = FirebaseAuth.getInstance().getCurrentUser();
+        String studentId = student.getUid();
+        DatabaseReference referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
+        referenceStudent.child(studentId).child("Tasks").child("PhysicsOne").child("idTeacher").setValue("None");//create default
+        referenceStudent.child(studentId).child("Tasks").child("PhysicsOne").child("linkGroup").setValue("https://www.facebook.com/");
+    }
 }

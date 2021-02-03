@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.project.daicuongbachkhoa.R;
 import com.project.daicuongbachkhoa.menubar.MenuBar;
-import com.project.daicuongbachkhoa.news.ListNews;
+import com.project.daicuongbachkhoa.news.listnews.ListNews;
 
 public class LandingPage extends AppCompatActivity {
     private TextView txtImportantNotification;

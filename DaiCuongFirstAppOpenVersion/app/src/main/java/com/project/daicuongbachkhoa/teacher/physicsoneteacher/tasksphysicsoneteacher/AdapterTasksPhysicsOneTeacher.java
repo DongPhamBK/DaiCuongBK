@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.daicuongbachkhoa.R;
 
 public class AdapterTasksPhysicsOneTeacher extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-    public TextView txtTitleTasks;
-    public TextView txtContentTasks;
+
+    public TextView
+            txtTitleTasksPhysicsOneTeacher,
+            txtContentTasksPhysicsOneTeacher;
+
     public AdapterTasksPhysicsOneTeacher(@NonNull View itemView) {
         super(itemView);
-        txtTitleTasks = itemView.findViewById(R.id.txtTitleTasks);
-        txtContentTasks = itemView.findViewById(R.id.txtContentTasks);
+        txtTitleTasksPhysicsOneTeacher = itemView.findViewById(R.id.txtTitleTasks);
+        txtContentTasksPhysicsOneTeacher = itemView.findViewById(R.id.txtContentTasks);
+
         itemView.setOnCreateContextMenuListener(this);
     }
 

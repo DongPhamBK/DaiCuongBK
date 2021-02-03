@@ -2,7 +2,11 @@ package com.project.daicuongbachkhoa.model;
 
 //model for student
 public class Student {
-    private String name,id,email,pass;
+    private String
+            name,
+            id,
+            email,
+            pass;
 
     public Student() {
     }

@@ -15,16 +15,22 @@ import com.project.daicuongbachkhoa.R;
 
 public class Target extends AppCompatActivity {
 
-    private EditText txtPoint1, txtPoint2, txtFactor1, txtFactor2;
-    private TextView txtResult;
-    private Button btnResult;
-    private ImageView imgTargetGoHome;
+    private EditText
+            txtPoint1,
+            txtPoint2,
+            txtFactor1,
+            txtFactor2;
+    private TextView
+            txtResult;
+    private Button
+            btnResult;
+    private ImageView
+            imgTargetGoHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
-
         txtPoint2 = findViewById(R.id.txtPoint2);
         txtPoint1 = findViewById(R.id.txtPoint1);
         txtFactor1 = findViewById(R.id.txtFactor1);
@@ -39,7 +45,6 @@ public class Target extends AppCompatActivity {
                 targetGoHome();
             }
         });
-
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,14 +53,14 @@ public class Target extends AppCompatActivity {
         });
     }
 
+    //return
     private void targetGoHome() {
-       // startActivity(new Intent(Target.this, MenuBar.class));
         finish();
     }
 
+    //target
     private void pointTarget() {
         try {
-            // chuyển dạng số thập phân
             float point1 = 0;
             point1 = Float.parseFloat(txtPoint1.getText().toString());
             float point2 = 0;
@@ -64,9 +69,6 @@ public class Target extends AppCompatActivity {
             float factor2 = Float.parseFloat(txtFactor2.getText().toString());
             float sum = point1 * factor1 + point2 * factor2;
             String result = String.valueOf(sum);
-
-
-            // hiện ra màn hình
             txtResult.setText("Kết quả của bạn: " + result);
             Toast.makeText(Target.this, "Cố gắng đạt mục tiêu nhé ! ", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

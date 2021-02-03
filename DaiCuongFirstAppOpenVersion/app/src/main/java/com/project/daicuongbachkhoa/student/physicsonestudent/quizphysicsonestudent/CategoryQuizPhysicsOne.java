@@ -2,17 +2,20 @@ package com.project.daicuongbachkhoa.student.physicsonestudent.quizphysicsonestu
 
 public class CategoryQuizPhysicsOne {
 
-    // lưu các chương của môn học
-    public static final int CATEGORY1 = 1;
-    public static final int CATEGORY2 = 2;
-    public static final int CATEGORY3 = 3;
-
-    private int id;
-    private String name;
+    // category
+    public static final int
+            CATEGORY1 = 1;
+    public static final int
+            CATEGORY2 = 2;
+    public static final int
+            CATEGORY3 = 3;
+    private int
+            id;
+    private String
+            name;
 
     public CategoryQuizPhysicsOne() {
     }
-
 
     public CategoryQuizPhysicsOne(String name) {
         this.name = name;
@@ -39,7 +42,6 @@ public class CategoryQuizPhysicsOne {
         this.name = name;
     }
 
-    // trả về tên
     @Override
     public String toString() {
         return getName();

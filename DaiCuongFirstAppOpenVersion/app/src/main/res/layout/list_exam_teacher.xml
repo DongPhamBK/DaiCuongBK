@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/btnNumberExamPhysicsOneTeacher"
+        android:id="@+id/btnNumberExamTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -21,19 +21,19 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txtNameExamPhysicsOneTeacher"
+            android:id="@+id/txtNameExamTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên đề" />
 
         <TextView
-            android:id="@+id/txtTeacherExamPhysicsOneTeacher"
+            android:id="@+id/txtTeacherExamTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Giáo viên" />
 
         <TextView
-            android:id="@+id/txtDeadlineExamPhysicsOneTeacher"
+            android:id="@+id/txtDeadlineExamTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hạn chót" />

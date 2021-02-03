@@ -16,13 +16,14 @@ import com.project.daicuongbachkhoa.teacher.TeacherInfo;
 
 public class OptionLawTeacher extends AppCompatActivity {
 
-    private TextView txtLawTeacherLogout, txtLawTeacherHelp;
+    private TextView
+            txtLawTeacherLogout,
+            txtLawTeacherHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_law_teacher);
-
         txtLawTeacherLogout = findViewById(R.id.txtLawTeacherLogout);
         txtLawTeacherHelp = findViewById(R.id.txtLawTeacherHelp);
 
@@ -32,7 +33,6 @@ public class OptionLawTeacher extends AppCompatActivity {
                 lawTeacherLogout();
             }
         });
-
         txtLawTeacherHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

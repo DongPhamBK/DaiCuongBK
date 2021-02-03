@@ -17,20 +17,24 @@ import com.project.daicuongbachkhoa.R;
 
 public class NotificationPhysicsOneTeacher extends AppCompatActivity {
 
-    private TextView txtNotificationPhysicsOneTeacher;
-    private DatabaseReference teacher;
-    private DatabaseReference reference;
+    private TextView
+            txtNotificationPhysicsOneTeacher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_physics_one_teacher);
-
         txtNotificationPhysicsOneTeacher = findViewById(R.id.txtNotificationPhysicsOneTeacher);
+
+        notificationPhysicsOneTeacher();
+    }
+
+    private void notificationPhysicsOneTeacher() {
         FirebaseDatabase.getInstance().getReference("Notification").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String notificationTeacher = String.valueOf(snapshot.child("Teacher").getValue());
-                String notificationPhysicsOne= String.valueOf(snapshot.child("PhysicsOne").getValue());
+                String notificationPhysicsOne = String.valueOf(snapshot.child("PhysicsOne").getValue());
                 txtNotificationPhysicsOneTeacher.setText(notificationTeacher + "\n\n" + notificationPhysicsOne);
             }
 
@@ -39,8 +43,6 @@ public class NotificationPhysicsOneTeacher extends AppCompatActivity {
                 txtNotificationPhysicsOneTeacher.setText("Có lỗi xảy ra ! Vui lòng thử lại hoặc liên hệ với quản trị viên để khắc phục !");
             }
         });
-
-
 
     }
 }

@@ -1,9 +1,7 @@
 package com.project.daicuongbachkhoa.student.physicsonestudent;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.project.daicuongbachkhoa.R;

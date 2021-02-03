@@ -27,19 +27,26 @@ import com.project.daicuongbachkhoa.model.Student;
 
 public class RegisterUser extends AppCompatActivity {
 
-
-    private TextView txtSignIn, txtRegisterTeacher;
-    private EditText txtNameRegister, txtIdRegister, txtEmailRegister, txtPasswordRegister, txtPasswordConfirm;
-    private Button btnRegister;
-    private ProgressBar progressBarRegister;
-    private FirebaseAuth mAuth;
+    private TextView
+            txtSignIn,
+            txtRegisterTeacher;
+    private EditText
+            txtNameRegister,
+            txtIdRegister,
+            txtEmailRegister,
+            txtPasswordRegister,
+            txtPasswordConfirm;
+    private Button
+            btnRegister;
+    private ProgressBar
+            progressBarRegister;
+    private FirebaseAuth
+            mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-
-        //find view by Id
         txtSignIn = findViewById(R.id.txtSignIn);
         txtNameRegister = findViewById(R.id.txtNameRegister);
         txtIdRegister = findViewById(R.id.txtIdRegister);
@@ -50,8 +57,6 @@ public class RegisterUser extends AppCompatActivity {
         txtRegisterTeacher = findViewById(R.id.txtRegisterTeacher);
         progressBarRegister = findViewById(R.id.progressBarRegister);
         mAuth = FirebaseAuth.getInstance();
-
-        //Control
 
         txtRegisterTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,19 +78,20 @@ public class RegisterUser extends AppCompatActivity {
         });
     }
 
+    //register if you are teacher
     private void registerTeacherAccount() {
         startActivity(new Intent(RegisterUser.this, RegisterTeacher.class));
     }
 
+    //sign in
     private void signInAccount() {
         Intent intent = new Intent(RegisterUser.this, LoginUser.class);
         startActivity(intent);
         finish();
     }
 
+    //register
     private void registerAccount() {
-
-        //get data input
         final String userNameRegister = txtNameRegister.getText().toString().trim();// chấm trim() để định dạng dữ liệu
         final String idUserRegister = txtIdRegister.getText().toString().trim();
         final String emailRegister = txtEmailRegister.getText().toString().trim();
@@ -96,7 +102,7 @@ public class RegisterUser extends AppCompatActivity {
         btnRegister.setText("ĐĂNG KÝ");
         btnRegister.setTextColor(Color.WHITE);
         progressBarRegister.setVisibility(View.VISIBLE);
-        btnRegister.setEnabled(false);// vì ứng dụng rất chậm, nên cần thêm thông số này để tránh người dùng nhấn 2 lần, nhảy lung tung
+        btnRegister.setEnabled(false);
 
         // treat exception
         if (userNameRegister.isEmpty()) {
@@ -164,13 +170,12 @@ public class RegisterUser extends AppCompatActivity {
             return;
         }
 
-        // đoạn code thiết lập tài khoản ! - create account
+        //create account
         mAuth.createUserWithEmailAndPassword(emailRegister, passwordRegister)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             Student student = new Student(userNameRegister, idUserRegister, emailRegister, passwordRegister);
                             FirebaseDatabase.getInstance().getReference("Students")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -183,24 +188,18 @@ public class RegisterUser extends AppCompatActivity {
                                         progressBarRegister.setVisibility(View.GONE);
                                         btnRegister.setText("Thành Công");
                                         btnRegister.setTextColor(Color.CYAN);
-                                        //btnRegister.setEnabled(true);
-                                        //finish();
-                                        //create data list exam in physics
-                                        createDataStatistical();
                                         FirebaseAuth.getInstance().signOut();
-                                        // nếu không có thao tác này, việc xác nhận email lần đầu coi như vô nghĩa !
-                                        // vì hệ thống sẽ tự động đăng nhập luôn, bỏ qua việc xác nhận email !
                                     } else {
                                         Toast.makeText(RegisterUser.this, "Chưa được, thử lại đi !", Toast.LENGTH_LONG).show();
                                         progressBarRegister.setVisibility(View.GONE);
                                         btnRegister.setText("Thất bại");
                                         txtNameRegister.setText("");
-                                        txtIdRegister.setText("");// xoá dữ liệu không hợp lệ !
+                                        txtIdRegister.setText("");
                                         txtEmailRegister.setText("");
                                         btnRegister.setEnabled(true);
                                     }
                                 }
-                            });// tạo nhánh Người dùng là students
+                            });
                         } else {
                             Toast.makeText(RegisterUser.this, "Ôi hỏng, có vẻ email sai hoặc đã được dùng !", Toast.LENGTH_LONG).show();
                             progressBarRegister.setVisibility(View.GONE);
@@ -210,19 +209,5 @@ public class RegisterUser extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    private void createDataStatistical() {
-        FirebaseUser student = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
-        final String studentId = student.getUid();
-        final DatabaseReference listPhysicsOne = referenceStudent.child(studentId).child("ListPhysicsOne");//check list exam
-        for (int i = 1; i < 3; i++) {
-            listPhysicsOne.child("Exam" + i).child("Status").setValue("No");
-            listPhysicsOne.child("Exam" + i).child("History").child("History1").setValue("No");
-            listPhysicsOne.child("Exam" + i).child("History").child("History2").setValue("No");
-            listPhysicsOne.child("Exam" + i).child("History").child("History3").setValue("No");
-
-        }
     }
 }

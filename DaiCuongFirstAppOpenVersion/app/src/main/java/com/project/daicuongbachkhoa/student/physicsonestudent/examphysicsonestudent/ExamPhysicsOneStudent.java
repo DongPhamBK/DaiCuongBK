@@ -30,26 +30,46 @@ import java.text.NumberFormat;
 
 public class ExamPhysicsOneStudent extends AppCompatActivity {
 
-    private TextView txtContent, txtYourSelectExamPhysicsOneStudent, txtTimeExamPhysicsOneStudent, txtResetAllAnswerExamPhysicsOneStudent;
-    private RadioButton radOptionAExamPhysicsOneStudent, radOptionBExamPhysicsOneStudent, radOptionCExamPhysicsOneStudent, radOptionDExamPhysicsOneStudent;
-    private RadioGroup radGroupExamPhysicsOneStudent;
-    private Button btnQuestionNextExamPhysicsOneStudent, btnQuestionPrevExamPhysicsOneStudent, btnSubmitExamPhysicsOneStudent;
-    private TextView txtNumberExamPhysicsOneStudent;
-    private FirebaseUser student;
-    private DatabaseReference reference, referenceStudent, referenceExam, answerPhysicsOne, answerExam1;
-    private String codeExam, nameExam;
-
-    //private DatabaseReference referenceExam, answerPhysicsOne, answerExam1;
-    private ValueEventListener referenceQuestion, referenceAnswer;
-
+    private TextView
+            txtContentExamPhysicsOneStudent,
+            txtYourSelectExamPhysicsOneStudent,
+            txtTimeExamPhysicsOneStudent,
+            txtResetAllAnswerExamPhysicsOneStudent;
+    private RadioButton
+            radOptionAExamPhysicsOneStudent,
+            radOptionBExamPhysicsOneStudent,
+            radOptionCExamPhysicsOneStudent,
+            radOptionDExamPhysicsOneStudent;
+    private RadioGroup
+            radGroupExamPhysicsOneStudent;
+    private Button
+            btnQuestionNextExamPhysicsOneStudent,
+            btnQuestionPrevExamPhysicsOneStudent,
+            btnSubmitExamPhysicsOneStudent;
+    private TextView
+            txtNumberExamPhysicsOneStudent;
+    private FirebaseUser
+            studentFirebaseUser;
+    private DatabaseReference
+            reference,
+            referenceStudent,
+            referenceExam,
+            answerPhysicsOne,
+            answerExam1;
+    private String
+            codeExam,
+            nameExam;
+    private ValueEventListener
+            referenceQuestion,
+            referenceAnswer;
+    private String studentID;
     private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_physics_one_student);
-
-        txtContent = findViewById(R.id.txtContentExamPhysicsOneStudent);
+        txtContentExamPhysicsOneStudent = findViewById(R.id.txtContentExamPhysicsOneStudent);
         txtYourSelectExamPhysicsOneStudent = findViewById(R.id.txtYourSelectExamPhysicsOneStudent);
         txtTimeExamPhysicsOneStudent = findViewById(R.id.txtTimeExamPhysicsOneStudent);
         txtResetAllAnswerExamPhysicsOneStudent = findViewById(R.id.txtResetAllAnswerExamPhysicsOneStudent);
@@ -62,15 +82,11 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
         radOptionCExamPhysicsOneStudent = findViewById(R.id.radOptionCExamPhysicsOneStudent);
         radOptionDExamPhysicsOneStudent = findViewById(R.id.radOptionDExamPhysicsOneStudent);
         txtNumberExamPhysicsOneStudent = findViewById(R.id.txtNumberExamPhysicsOneStudent);
-
+        studentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        studentID = studentFirebaseUser.getUid();
 
         loadCodeExam();
         startTimeExam();
-        /*Intent intent = getIntent();
-        nameExam = intent.getStringExtra("NAME_EXAM_PHYSICS_ONE_STUDENT");
-        codeExam = intent.getStringExtra("CODE_EXAM_PHYSICS_ONE_STUDENT");
-        txtNumberExamPhysicsOneStudent.setText(nameExam);
-        btnQuestionPrevExamPhysicsOneStudent.setVisibility(View.GONE);*/
         txtResetAllAnswerExamPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,19 +103,16 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
                 showContentQuestionNext();
             }
         });
-
         btnQuestionPrevExamPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showContentQuestionPrev();
             }
         });
-
         btnSubmitExamPhysicsOneStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitExamPhysicsOneStudent();
-
             }
         });
 
@@ -124,12 +137,10 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
     }
 
     private void resetAll() {
         FirebaseUser student = FirebaseAuth.getInstance().getCurrentUser();
-        String studentID = student.getUid();
         DatabaseReference referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
         DatabaseReference listQues = referenceStudent.child(studentID).child("PhysicsOne").child(codeExam);//check list exam
         for (int i = 1; i <= 10; i++) {
@@ -143,8 +154,6 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
         codeExam = intent.getStringExtra("CODE_EXAM_PHYSICS_ONE_STUDENT");
         txtNumberExamPhysicsOneStudent.setText(nameExam);
         btnQuestionPrevExamPhysicsOneStudent.setVisibility(View.GONE);
-
-
     }
 
     private void showContentQuestionPrev() {
@@ -174,9 +183,9 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
                 .setPositiveButton("XÁC NHẬN", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         Intent intent = new Intent(ExamPhysicsOneStudent.this, ResultExamPhysicsOneStudent.class);
                         intent.putExtra("CODE_RESULT_EXAM_PHYSICS_ONE_STUDENT", codeExam);
+                        intent.putExtra("NAME_RESULT_EXAM_PHYSICS_ONE_STUDENT", nameExam);
                         startActivity(intent);
                         finish();
                     }
@@ -197,78 +206,78 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("PhysicsOneTeacher");
 
         referenceExam = reference.child(codeExam);
-        referenceQuestion = referenceExam.child("Ques" + questionCount).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String content = String.valueOf(snapshot.child("Content").getValue());
-                txtContent.setText(content);
-                String optA = String.valueOf(snapshot.child("OptionA").getValue());
-                radOptionAExamPhysicsOneStudent.setText("A. " + optA);
-                String optB = String.valueOf(snapshot.child("OptionB").getValue());
-                radOptionBExamPhysicsOneStudent.setText("B. " + optB);
-                String optC = String.valueOf(snapshot.child("OptionC").getValue());
-                radOptionCExamPhysicsOneStudent.setText("C. " + optC);
-                String optD = String.valueOf(snapshot.child("OptionD").getValue());
-                radOptionDExamPhysicsOneStudent.setText("D. " + optD);
+        referenceQuestion = referenceExam.child("Ques" + questionCount).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String content = String.valueOf(snapshot.child("Content").getValue());
+                        txtContentExamPhysicsOneStudent.setText(content);
+                        String optA = String.valueOf(snapshot.child("OptionA").getValue());
+                        radOptionAExamPhysicsOneStudent.setText("A. " + optA);
+                        String optB = String.valueOf(snapshot.child("OptionB").getValue());
+                        radOptionBExamPhysicsOneStudent.setText("B. " + optB);
+                        String optC = String.valueOf(snapshot.child("OptionC").getValue());
+                        radOptionCExamPhysicsOneStudent.setText("C. " + optC);
+                        String optD = String.valueOf(snapshot.child("OptionD").getValue());
+                        radOptionDExamPhysicsOneStudent.setText("D. " + optD);
 
-                student = FirebaseAuth.getInstance().getCurrentUser();
-                referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
-                String userID = student.getUid();
-                referenceAnswer = referenceStudent.child(userID).child("PhysicsOne")
-                        .child(codeExam).addValueEventListener(new ValueEventListener() {
+                        studentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
+                        String userID = studentFirebaseUser.getUid();
+                        referenceAnswer = referenceStudent.child(userID).child("PhysicsOne")
+                                .child(codeExam).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String yourAnswer = String.valueOf(snapshot.child("Ques" + questionCount).getValue());
+                                        txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: " + yourAnswer);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+
+                        radGroupExamPhysicsOneStudent.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String yourAnswer = String.valueOf(snapshot.child("Ques" + questionCount).getValue());
-                                txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: " + yourAnswer);
+                            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                                RadioButton radOptionExamPhysicsOneStudent = (RadioButton) radGroupExamPhysicsOneStudent.findViewById(i);
+                                int selectRadio = radGroupExamPhysicsOneStudent.indexOfChild(radOptionExamPhysicsOneStudent) + 1;
+                                switch (selectRadio) {
+                                    case 1:
+                                        txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: A");
+                                        updateAnswerExamPhysicsOneStudent(questionCount, "A");
+                                        break;
+                                    case 2:
+                                        txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: B");
+                                        updateAnswerExamPhysicsOneStudent(questionCount, "B");
+                                        break;
+                                    case 3:
+                                        txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: C");
+                                        updateAnswerExamPhysicsOneStudent(questionCount, "C");
+                                        break;
+                                    case 4:
+                                        txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: D");
+                                        updateAnswerExamPhysicsOneStudent(questionCount, "D");
+                                        break;
+                                    default:
+                                        break;
+                                }
 
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
+                    }
 
-                radGroupExamPhysicsOneStudent.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        RadioButton radOptionExamPhysicsOneStudent = (RadioButton) radGroupExamPhysicsOneStudent.findViewById(i);
-                        int selectRadio = radGroupExamPhysicsOneStudent.indexOfChild(radOptionExamPhysicsOneStudent) + 1;
-                        switch (selectRadio) {
-                            case 1:
-                                txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: A");
-                                updateAnswerExamPhysicsOneStudent(questionCount, "A");
-                                break;
-                            case 2:
-                                txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: B");
-                                updateAnswerExamPhysicsOneStudent(questionCount, "B");
-                                break;
-                            case 3:
-                                txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: C");
-                                updateAnswerExamPhysicsOneStudent(questionCount, "C");
-                                break;
-                            case 4:
-                                txtYourSelectExamPhysicsOneStudent.setText("Bạn đã chọn: D");
-                                updateAnswerExamPhysicsOneStudent(questionCount, "D");
-                                break;
-                            default:
-                                break;
-                        }
-
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(ExamPhysicsOneStudent.this, "Có lỗi xảy ra! Vui lòng kiểm tra Internet !", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ExamPhysicsOneStudent.this, "Có lỗi xảy ra! Vui lòng kiểm tra Internet !", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void updateAnswerExamPhysicsOneStudent(int questionCount, String answerStudent) {
-        student = FirebaseAuth.getInstance().getCurrentUser();
+        studentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         referenceStudent = FirebaseDatabase.getInstance().getReference("Students");
-        String userID = student.getUid();
+        String userID = studentFirebaseUser.getUid();
         answerPhysicsOne = referenceStudent.child(userID).child("PhysicsOne");// nhánh vật lí của student;// nhánh cá nhân
         answerExam1 = answerPhysicsOne.child(codeExam);
         answerExam1.child("Ques" + questionCount).setValue(answerStudent);
@@ -276,14 +285,13 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
 
     private void startTimeExam() {
         //20 minutes for exam
-        new CountDownTimer(300000 + 5000, 1000) {
+        new CountDownTimer(3000000 + 5000, 1000) {
             public void onTick(long timeExam) {
                 // Used for formatting digit to be in 2 digits only
                 NumberFormat f = new DecimalFormat("00");
                 long min = (timeExam / 60000) % 60;
                 long sec = (timeExam / 1000) % 60;
                 txtTimeExamPhysicsOneStudent.setText(f.format(min) + ":" + f.format(sec));
-
                 if (Long.parseLong(f.format(min).toString()) < 5) {
                     txtTimeExamPhysicsOneStudent.setTextColor(Color.RED);
                 }
@@ -292,10 +300,37 @@ public class ExamPhysicsOneStudent extends AppCompatActivity {
             // When the task is over
             public void onFinish() {
                 txtTimeExamPhysicsOneStudent.setText("Hết giờ");
-                btnQuestionNextExamPhysicsOneStudent.setVisibility(View.GONE);
+                txtResetAllAnswerExamPhysicsOneStudent.setVisibility(View.GONE);
+                btnQuestionNextExamPhysicsOneStudent.setEnabled(false);
+                btnQuestionNextExamPhysicsOneStudent.setText("HẾT GIỜ, VUI LÒNG NHẤN NỘP BÀI !!!");
+                btnQuestionNextExamPhysicsOneStudent.setBackgroundColor(Color.CYAN);
                 btnQuestionPrevExamPhysicsOneStudent.setVisibility(View.GONE);
-                Toast.makeText(ExamPhysicsOneStudent.this, "Đã hết giờ, vui lòng nhấn nộp bài !", Toast.LENGTH_LONG).show();
             }
         }.start();
+    }
+
+    protected void confirmExit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Bạn chắn chắn muốn thoát ?\nLịch sử bài làm chưa được lưu lại nếu bạn chưa nhấn nộp bài !")
+                .setCancelable(false)
+                .setPositiveButton("XÁC NHẬN", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.exit(0);
+                    }
+                })
+                .setNegativeButton("XEM LẠI BÀI THI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        confirmExit();
     }
 }

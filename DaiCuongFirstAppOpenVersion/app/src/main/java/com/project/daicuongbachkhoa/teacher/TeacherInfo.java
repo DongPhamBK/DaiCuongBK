@@ -27,19 +27,25 @@ import com.project.daicuongbachkhoa.model.Teacher;
 
 public class TeacherInfo extends AppCompatActivity {
 
-    private FirebaseUser teacher;
-    private DatabaseReference reference;
-    private String teacherInfo;
-    private String teacherCode;
-    private EditText txtTeacherCode;
-    private TextView txtLogoutTeacher;
-    private Button btnTeacherVerification;
+    private FirebaseUser
+            teacher;
+    private DatabaseReference
+            reference;
+    private String
+            teacherInfo;
+    private String
+            teacherCode;
+    private EditText
+            txtTeacherCode;
+    private TextView
+            txtLogoutTeacher;
+    private Button
+            btnTeacherVerification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_info);
-
         txtTeacherCode = findViewById(R.id.txtTeacherCode);
         txtLogoutTeacher = findViewById(R.id.txtLogoutTeacher);
         btnTeacherVerification = findViewById(R.id.btnTeacherVerification);
@@ -50,7 +56,6 @@ public class TeacherInfo extends AppCompatActivity {
                 teacherVerification();
             }
         });
-
         txtLogoutTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +72,6 @@ public class TeacherInfo extends AppCompatActivity {
     }
 
     private void teacherVerification() {
-
         String getTeacherCode = txtTeacherCode.getText().toString();
         if (getTeacherCode.equals(teacherCode)) {
             if (getTeacherCode.contains("ph1")) {
@@ -81,7 +85,6 @@ public class TeacherInfo extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(this, "Vui lòng nhập lại mã code !", Toast.LENGTH_SHORT).show();
-                finish();
             }
         } else {
             Toast.makeText(this, "Mã không hợp lệ !\nVui lòng nhập lại !", Toast.LENGTH_SHORT).show();
@@ -89,7 +92,6 @@ public class TeacherInfo extends AppCompatActivity {
     }
 
     private void getNameOfTeacher() {
-
         teacher = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Teachers");
         teacherInfo = teacher.getUid();

@@ -14,11 +14,14 @@ import java.util.List;
 
 public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "QuizPhysicsOne.db";
-    private static final int DATABASE_VERSION = 1;
-    private static DbHelperQuizPhysicsOne instace;
-
-    private SQLiteDatabase db;
+    private static final String
+            DATABASE_NAME = "QuizPhysicsOne.db";
+    private static final int
+            DATABASE_VERSION = 1;
+    private static DbHelperQuizPhysicsOne
+            instace;
+    private SQLiteDatabase
+            db;
 
     private DbHelperQuizPhysicsOne(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,10 +60,9 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
         fillCategoriesTable();
         fillQuestionsTable();
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        // chú ý lệnh sql cần chính xác
         db.execSQL("DROP TABLE IF EXISTS " + CategoriesTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + QuestionTable.TABLE_NAME);
         onCreate(db);
@@ -71,22 +73,8 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
-        // cái này nó bắt api cái trên, khi nào lỗi thì cần xem lại !
-        /*
-
-        ***********************************
-
-
-        NHỚ KIỂM TRA LẠI CHỖ NÀY NHÉ !
-
-
-        ********************************
-
-
-         */
     }
 
-    //bảng chương học
     private void fillCategoriesTable() {
         CategoryQuizPhysicsOne c1 = new CategoryQuizPhysicsOne("Động học chất điểm");
         insertCategory(c1);
@@ -109,15 +97,11 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
     }
 
     private void insertCategory(CategoryQuizPhysicsOne category) {
-
         ContentValues cv = new ContentValues();
         cv.put(CategoriesTable.COLUMN_NAME, category.getName());
         db.insert(CategoriesTable.TABLE_NAME, null, cv);
-
     }
 
-
-    // bảng phương án
     private void fillQuestionsTable() {
         QuestionQuizPhysicsOne q1 = new QuestionQuizPhysicsOne("Trường hợp nào dưới đây có thể coi vật chuyển động như một chất điểm ?", "A.Chiếc ô tô trong bến xe.", "B.Mặt Trăng quanh Trái Đất", "C.Con cá trong chậu", 2, QuestionQuizPhysicsOne.LEVEL_EASY, CategoryQuizPhysicsOne.CATEGORY1);
         insertQuestion(q1);
@@ -144,7 +128,6 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
         insertQuestion(q11);
         QuestionQuizPhysicsOne q12 = new QuestionQuizPhysicsOne("Tại một nơi nhất định trên Trái Đất và ở gần mặt đất, các vật đều rơi tự do với:", "A.Cùng một gia tốc g.", "B.Gia tốc khác nhau.", "C.Gia tốc bằng 0", 1, QuestionQuizPhysicsOne.LEVEL_MEDIUM, CategoryQuizPhysicsOne.CATEGORY1);
         insertQuestion(q12);
-
         QuestionQuizPhysicsOne q13 = new QuestionQuizPhysicsOne("Trường hợp nào dưới đây có thể coi vật chuyển động như một chất điểm ?", "A.Chiếc ô tô trong bến xe.", "B.Mặt Trăng quanh Trái Đất", "C.Con cá trong chậu", 2, QuestionQuizPhysicsOne.LEVEL_HARD, CategoryQuizPhysicsOne.CATEGORY1);
         insertQuestion(q13);
         QuestionQuizPhysicsOne q14 = new QuestionQuizPhysicsOne("Nếu nói \"Trái Đất quay quanh Mặt Trời\" thì trong câu nói này vật nào được chọn làm vật mốc?", "A.Trái Đất", "B.Mặt Trăng", "C.Mặt Trời", 3, QuestionQuizPhysicsOne.LEVEL_HARD, CategoryQuizPhysicsOne.CATEGORY1);
@@ -159,7 +142,6 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
         insertQuestion(q18);
 
     }
-
 
     public void addQuestion(QuestionQuizPhysicsOne question){
         db = getWritableDatabase();
@@ -202,12 +184,10 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
         return categoryList;
     }
 
-    // nhập list câu hỏi
     public ArrayList<QuestionQuizPhysicsOne> getAllQuestions() {
         ArrayList<QuestionQuizPhysicsOne> questionList = new ArrayList<>();
         db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + QuestionTable.TABLE_NAME, null);
-
         if (c.moveToFirst()) {
             do {
                 QuestionQuizPhysicsOne question = new QuestionQuizPhysicsOne();
@@ -220,18 +200,15 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
                 question.setLevel(c.getString(c.getColumnIndex(QuestionTable.COLUMN_LEVEL)));
                 question.setCategoryId(c.getInt(c.getColumnIndex(QuestionTable.COLUMN_CATEGORY_ID)));
                 questionList.add(question);
-
             } while (c.moveToNext());
         }
-        c.close();// đừng quên khoá lại !
+        c.close();
         return questionList;
-
     }
 
     public ArrayList<QuestionQuizPhysicsOne> getQuestions(int categoryId, String difficulty) {
         ArrayList<QuestionQuizPhysicsOne> questionList = new ArrayList<>();
         db = getReadableDatabase();
-
         String selection = QuestionTable.COLUMN_CATEGORY_ID + " = ? " +
                 " AND " + QuestionTable.COLUMN_LEVEL + " = ? ";
         String[] selectionArgs = new String[]{String.valueOf(categoryId),difficulty};
@@ -244,12 +221,6 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
                 null,
                 null
         );
-
-       /* String[] selectionArgs = new String[]{difficulty};
-        Cursor c = db.rawQuery("SELECT * FROM " + QuestionTable.TABLE_NAME +
-                " WHERE " + QuestionTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
-*/
-
         if (c.moveToFirst()) {
             do {
                 QuestionQuizPhysicsOne question = new QuestionQuizPhysicsOne();
@@ -264,9 +235,7 @@ public class DbHelperQuizPhysicsOne extends SQLiteOpenHelper {
                 questionList.add(question);
             } while (c.moveToNext());
         }
-        c.close();// đừng quên khoá lại !
+        c.close();
         return questionList;
-
     }
-
 }

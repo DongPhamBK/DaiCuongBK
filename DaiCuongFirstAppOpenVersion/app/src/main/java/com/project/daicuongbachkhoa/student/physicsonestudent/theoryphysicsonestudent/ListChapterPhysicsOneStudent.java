@@ -35,7 +35,7 @@ public class ListChapterPhysicsOneStudent extends AppCompatActivity {
         arrChapter.add(new Chapter("pdf_physicsone_chapter4","Chương 4:","Hệ chất điểm"));
         arrChapter.add(new Chapter("pdf_physicsone_chapter5","Chương 5:","Vật rắn"));
         arrChapter.add(new Chapter("pdf_physicsone_chapter6","Chương 6:","Khí lí tưởng"));
-        adapterChapterPhysicsOneStudent = new AdapterChapterPhysicsOneStudent(ListChapterPhysicsOneStudent.this,R.layout.list_chapter_theory_physics_one_student,arrChapter);
+        adapterChapterPhysicsOneStudent = new AdapterChapterPhysicsOneStudent(ListChapterPhysicsOneStudent.this,R.layout.list_chapter_theory_student,arrChapter);
         lvListChapterPhysicsOneStudent.setAdapter(adapterChapterPhysicsOneStudent);
     }
 }

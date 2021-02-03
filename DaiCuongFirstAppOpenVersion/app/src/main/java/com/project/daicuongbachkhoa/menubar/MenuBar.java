@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,28 +16,37 @@ import android.widget.LinearLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.daicuongbachkhoa.MainActivity;
 import com.project.daicuongbachkhoa.R;
+import com.project.daicuongbachkhoa.news.listnews.ListNews;
 import com.project.daicuongbachkhoa.student.StudentInfo;
+import com.project.daicuongbachkhoa.student.StudentNotification;
+import com.project.daicuongbachkhoa.student.Subject;
 import com.project.daicuongbachkhoa.student.algebrastudent.OptionAlgebraStudent;
 import com.project.daicuongbachkhoa.student.lawstudent.OptionLawStudent;
 import com.project.daicuongbachkhoa.student.physicsonestudent.OptionPhysicsOneStudent;
 
 public class MenuBar extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    private LinearLayout btnGoLogOut;
-    private LinearLayout btnGoAuthor;
-    private LinearLayout btnGoTarget;
-    private LinearLayout btnGoFeedback;
-    private LinearLayout btnGoHome;
-    private ImageView imgGoMenu, imgPhysicsOne, imgAlgebra, imgLaw;
-    private ImageButton btnPhysic, btnLaw, btnAlgebla;
+    public DrawerLayout
+            drawerLayout;
+    private LinearLayout
+            btnGoLogOut,
+            btnGoAuthor,
+            btnGoTarget,
+            btnGoFeedback,
+            btnGoHome;
+    private ImageView
+            imgGoMenu,
+            imgGoStudentNotification,
+            imgGoLearn,
+            imgGoNews,
+            imgGoCompetition,
+            imgGoGame;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_bar);
-
         drawerLayout = findViewById(R.id.drawer_layout);
         btnGoHome = findViewById(R.id.btnGoHome);
         btnGoAuthor = findViewById(R.id.btnGoAuthor);
@@ -44,14 +54,20 @@ public class MenuBar extends AppCompatActivity {
         btnGoTarget = findViewById(R.id.btnGoTarget);
         btnGoLogOut = findViewById(R.id.btnGoLogOut);
         imgGoMenu = findViewById(R.id.imgGoMenu);
+        imgGoStudentNotification = findViewById(R.id.imgStudentNotification);
+        imgGoLearn = findViewById(R.id.imgGoLearn);
+        imgGoNews = findViewById(R.id.imgGoNews);
 
-        imgPhysicsOne = findViewById(R.id.imgPhysicsOne);
-        imgAlgebra = findViewById(R.id.imgAlgebra);
-        imgLaw = findViewById(R.id.imgLaw);
         imgGoMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goMenu();
+            }
+        });
+        imgGoStudentNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goStudentNotification();
             }
         });
         btnGoLogOut.setOnClickListener(new View.OnClickListener() {
@@ -84,41 +100,34 @@ public class MenuBar extends AppCompatActivity {
                 goInformationUser();
             }
         });
-        imgPhysicsOne.setOnClickListener(new View.OnClickListener() {
+        imgGoLearn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goOptionPhysic();
+                goLearn();
             }
         });
-        imgLaw.setOnClickListener(new View.OnClickListener() {
+        imgGoNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goOptionLaw();
-            }
-        });
-        imgAlgebra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goOptionAlgebra();
+                goNews();
             }
         });
     }
 
-    private void goOptionAlgebra() {
-        startActivity(new Intent(MenuBar.this, OptionAlgebraStudent.class));
+    private void goStudentNotification() {
+        startActivity(new Intent(MenuBar.this, StudentNotification.class));
     }
 
-    private void goOptionLaw() {
-        startActivity(new Intent(MenuBar.this, OptionLawStudent.class));
+    private void goNews() {
+        startActivity(new Intent(MenuBar.this, ListNews.class));
     }
 
-    private void goOptionPhysic() {
-        startActivity(new Intent(MenuBar.this, OptionPhysicsOneStudent.class));
+    private void goLearn() {
+        startActivity(new Intent(MenuBar.this, Subject.class));
     }
 
     private void goInformationUser() {
         startActivity(new Intent(this, StudentInfo.class));
-        //finish();
     }
 
     private void goMenu() {
@@ -127,52 +136,35 @@ public class MenuBar extends AppCompatActivity {
 
     private void goFeedback() {
         startActivity(new Intent(MenuBar.this, Feedback.class));
-        //finish();
     }
 
     private void goTarget() {
         startActivity(new Intent(MenuBar.this, Target.class));
-       // finish();
     }
 
     private void goAuthor() {
         startActivity(new Intent(this, Author.class));
-        //finish();
     }
 
     private void logOutAccount() {
         FirebaseAuth.getInstance().signOut();
-        //finish();
         startActivity(new Intent(MenuBar.this, MainActivity.class));
-        //moveTaskToBack(true);
-        //android.os.Process.killProcess(android.os.Process.myPid());
-        //System.exit(1);
         finish();
     }
 
- /*   public void ClickMenu(View view) {
-        openDrawer(drawerLayout);
-    }
-*/
-
-    // các hàm khoá mở navigation bar
+    // open - close navigation bar
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
-
     }
 
     public static void closeDrawer(DrawerLayout drawerLayout) {
-
-        // khoá
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
-    // hàm thêm cho hình nền !
     public void clickLogo(View view) {
         closeDrawer(drawerLayout);
-        // hàm này bỏ đi cũng được, click vào logo trên thôi mà !
     }
 
     public static void redirectActivity(Activity activity, Class aClass) {
@@ -181,7 +173,6 @@ public class MenuBar extends AppCompatActivity {
         activity.startActivity(intent);
     }
 
-    // thao tác khoá thanh bar
     @Override
     protected void onPause() {
         super.onPause();
